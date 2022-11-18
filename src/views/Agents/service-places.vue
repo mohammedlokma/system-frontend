@@ -7,7 +7,7 @@
     <button
       style="margin-top: -60px; float: right"
       class="btn btn-primary"
-      @click="AddAdmin"
+      @click="AddPlace"
     >
       إضافة مكان
     </button>
@@ -48,7 +48,7 @@
     <!-- table -->
     <vue-good-table
       :columns="columns"
-      :rows="this.places"
+      :rows="this.servicePlaces"
       :rtl="direction"
       :search-options="{
         enabled: true,
@@ -88,7 +88,20 @@
           <span class="text-nowrap">{{ props.row.name }}</span>
         </span>
       
-       
+         <!-- Column: Agents -->
+        <span
+          v-else-if="props.column.field === 'numberOfAgents'"
+          class="text-nowrap"
+        >
+        <button
+            style="margin-right: 16px"
+            class="btn btn-primary"
+            @click="GoToAgents(props.row.id)"
+          >
+            {{ props.row.numberOfAgents }}
+          </button>
+        </span>
+      
 
         <!-- Column: Action -->
         <span v-else-if="props.column.field === 'action'">
@@ -99,7 +112,7 @@
             variant="outline-danger"
             style="margin-right: 16px"
             class="btn btn-danger"
-            @click="$bvModal.show(props.row.id)"
+            @click="$bvModal.show(props.row.id.toString())"
           >
             <feather-icon
               icon="Trash2Icon"
@@ -122,13 +135,13 @@
                 variant="primary"
                 size="sm"
                 class="mt-2 mr-2"
-                @click="DeletePlace(props.row.id) + $bvModal.hide(props.row.id)"
+                @click="DeletePlace(props.row.id) + $bvModal.hide(props.row.id.toString())"
               >تأكيد</b-button>
               <b-button
                 variant="danger"
                 size="sm"
                 class="mt-2 ml-2"
-                @click="$bvModal.hide(props.row.id)"
+                @click="$bvModal.hide(props.row.id.toString())"
               >إلغاء</b-button>
             </div>
           </b-modal>
@@ -239,8 +252,8 @@ export default {
   mounted() {
 
       
-    this.admins = this.$store.getters.GetAdmins;
-    console.log(this.admins)
+    this.servicePlaces = this.$store.getters.GetServicePlaces;
+    
   },
   
   data() {
@@ -259,7 +272,10 @@ export default {
           },
         },
        
-        
+         {
+          label: 'عدد المندوبين',
+          field: 'numberOfAgents',
+        },
         {
           label: 'التفاصيل',
           field: 'action',
@@ -270,13 +286,20 @@ export default {
     }
   },
   methods: {
-    AddAdmin() {
-      this.$router.push( 'add-servicePlace' )
+    AddPlace() {
+      this.$router.push( 'add-service-place' )
     },
-
+    GoToAgents(id){
+      this.$router.push({
+        name:'agents',
+        params:{id:id},
+        
+      })
+    },
     
     DeletePlace(id) {
-      this.admins = this.servicePlaces.filter(i=>i.id !== id);
+      console.log(id)
+      this.servicePlaces = this.servicePlaces.filter(i=>i.id !== id);
 
       store.commit('DeletePlace', id)
     },

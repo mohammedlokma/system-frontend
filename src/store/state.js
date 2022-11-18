@@ -16,11 +16,13 @@ export default{
     servicePlaces:[
         {
             id:1,
-            name:"مطار القاهرة"
+            name:"مطار القاهرة",
+            numberOfAgents:1,
         },
         {
             id:2,
-            name:"وسط البلد"
+            name:"وسط البلد",
+            numberOfAgents:2,
         }
     ],
     agents:[
@@ -33,6 +35,17 @@ export default{
                 id:1,
                 name:"مطار القاهرة"
             },
+            {
+                id:2,
+                name:"وسط البلد"
+            }]
+        },
+        {
+            id:2,
+            name:"حسن",
+            username:"hassan",
+            password:"123",
+            servicePlaces:[
             {
                 id:2,
                 name:"وسط البلد"

@@ -137,7 +137,7 @@
                 variant="danger"
                 size="sm"
                 class="mt-2 ml-2"
-                @click="$bvModal.hide(props.row.id)"
+                @click="$bvModal.hide(props.row.id.toString())"
               >إلغاء</b-button>
             </div>
           </b-modal>

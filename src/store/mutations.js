@@ -18,6 +18,7 @@ export default{
       DeleteAdmins(state){
         state.admins.splice(0,state.admins.length);
       },
+
       //agents
       AddAgent(state,payload){
         state.agents.push(payload);
@@ -38,5 +39,17 @@ export default{
   
       DeleteAgents(state){
         state.agents.splice(0,state.agents.length);
-      }
+      },
+      
+      AddPlace(state,payload){
+        state.servicePlaces.push(payload)
+      },
+      
+      DeletePlace(state,id){
+        state.servicePlaces = state.servicePlaces.filter(i => i.id !==  id);
+      },
+  
+      DeletePlaces(state){
+        state.servicePlaces.splice(0,state.servicePlaces.length);
+      },
 }

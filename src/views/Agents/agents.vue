@@ -146,7 +146,7 @@
                 variant="danger"
                 size="sm"
                 class="mt-2 ml-2"
-                @click="$bvModal.hide(props.row.id)"
+                @click="$bvModal.hide(props.row.id.toString())"
               >إلغاء</b-button>
             </div>
           </b-modal>
@@ -253,11 +253,17 @@ export default {
     'b-modal': VBModal,
     Ripple,
   },
-
+props:['id'],
   mounted() {
-
-      
+    if(this.id){
+       this.agents =  this.$store.getters.GetAgents.filter(i => 
+                i.servicePlaces.some(s => s.id == this.id)
+                
+            );
+    }
+    else{
     this.agents = this.$store.getters.GetAgents;
+    }
     
   },
   
