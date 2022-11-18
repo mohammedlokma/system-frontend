@@ -9,7 +9,7 @@
       class="btn btn-primary"
       @click="AddAdmin"
     >
-      إضافة أدمن
+      إضافة مكان
     </button>
     
 
@@ -24,17 +24,17 @@
       <div class="col-12 text-center">
         <p><strong>هل انت متأكد من حذف الجميع</strong>؟</p>
         <p
-          v-for="admin in this.admins"
-          :key="admin.id.toString()"
+          v-for="place in this.servicePlaces"
+          :key="place.id.toString()"
           style="color: red"
         >
-          {{ admin.name }}
+          {{ place.name }}
         </p>
         <b-button
           variant="primary"
           size="sm"
           class="mt-2 mr-2"
-          @click="DeleteAllAdmins() + $bvModal.hide('modal-dangerr')"
+          @click="DeleteAllPlaces() + $bvModal.hide('modal-dangerr')"
         >تأكيد</b-button>
         <b-button
           variant="danger"
@@ -48,7 +48,7 @@
     <!-- table -->
     <vue-good-table
       :columns="columns"
-      :rows="this.admins"
+      :rows="this.places"
       :rtl="direction"
       :search-options="{
         enabled: true,
@@ -87,28 +87,19 @@
           /> -->
           <span class="text-nowrap">{{ props.row.name }}</span>
         </span>
-        <!-- Column: project -->
+      
        
 
         <!-- Column: Action -->
         <span v-else-if="props.column.field === 'action'">
-          <button
-            style="margin-right: 16px"
-            class="btn btn-primary"
-            @click="EditAdmin(props.row)"
-          >
-            <feather-icon
-              icon="EditIcon"
-              size="12"
-            />
-          </button>
+         
 
           <button
             v-ripple.400="'rgba(234, 84, 85, 0.15)'"
             variant="outline-danger"
             style="margin-right: 16px"
             class="btn btn-danger"
-            @click="$bvModal.show(props.row.id.toString())"
+            @click="$bvModal.show(props.row.id)"
           >
             <feather-icon
               icon="Trash2Icon"
@@ -131,7 +122,7 @@
                 variant="primary"
                 size="sm"
                 class="mt-2 mr-2"
-                @click="DeleteAdmin(props.row.id) + $bvModal.hide(props.row.id.toString())"
+                @click="DeletePlace(props.row.id) + $bvModal.hide(props.row.id)"
               >تأكيد</b-button>
               <b-button
                 variant="danger"
@@ -254,7 +245,7 @@ export default {
   
   data() {
     return {
-     admins:[],
+     servicePlaces:[],
       pageLength: 7,
       dir: false,
       codeBasic,
@@ -267,14 +258,7 @@ export default {
             placeholder: 'بحث بالاسم ',
           },
         },
-        {
-          label: 'اسم المستخدم',
-          field: 'username',
-           filterOptions: {
-            enabled: true,
-            placeholder: 'بحث باسم السمتخدم',
-          },
-        },
+       
         
         {
           label: 'التفاصيل',
@@ -287,30 +271,19 @@ export default {
   },
   methods: {
     AddAdmin() {
-      this.$router.push('admin-update')
+      this.$router.push( 'add-servicePlace' )
     },
 
-    EditAdmin(row) {
-      this.$router.push({
-        name: 'admin-update',
-        // preserve current path and remove the first char to avoid the target URL starting with `//`
-        params: {  id:row.id },
-        // preserve existing query and hash if any
-        query: this.$route.query,
-        //hash: `?id=${row.id}`,
-      })
-    },
-    DeleteAdmin(id) {
-      console.log(id)
-      this.admins = this.admins.filter(i=>i.id !== id);
-      console.log(this.admins)
+    
+    DeletePlace(id) {
+      this.admins = this.servicePlaces.filter(i=>i.id !== id);
 
-      store.commit('DeleteAdmin', id)
+      store.commit('DeletePlace', id)
     },
 
-    DeleteAllAdmins() {
-      this.admins = [];
-      store.commit('DeleteAdmins')
+    DeleteAllPlaces() {
+      this.servicePlaces = [];
+      store.commit('DeletePlaces')
     },
   },
   computed: {

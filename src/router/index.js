@@ -54,6 +54,51 @@ const router = new VueRouter({
         ],
       },
     },
+    //agents
+    {
+      path: '/agents',
+      name: 'agents',
+      component: () => import('@/views/Agents/agents.vue'),
+      meta: {
+        pageTitle: 'المندوبين',
+        breadcrumb: [
+          {
+            text: 'المندوبين',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/agent-update/:id?',
+      name: 'agent-update',
+      props:true,
+      component: () => import('@/views/Agents/agent-update.vue'),
+      meta: {
+        pageTitle: 'المندوبين',
+        breadcrumb: [
+          {
+            text: 'إضافة مندوب',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/service-places',
+      name: 'service-places',
+      props:true,
+      component: () => import('@/views/Agents/service-places.vue'),
+      meta: {
+        pageTitle: 'المندوبين',
+        breadcrumb: [
+          {
+            text:'أماكن الخدمه',
+            active: true,
+          },
+        ],
+      },
+    },
     {
       path: '/projects',
       name: 'projects',

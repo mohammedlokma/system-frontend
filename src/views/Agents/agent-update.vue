@@ -3,7 +3,7 @@
     <b-card-code>
       <validation-observer ref="simpleRules">
         <b-form
-          v-if="!editAdmin"
+          v-if="!editAgent"
           style=""
           @submit.prevent
         >
@@ -13,12 +13,12 @@
             <!--  name -->
             <b-col cols="12">
               <b-form-group
-                label="اسم المشرف"
+                label="اسم المندوب"
                 label-for="v-first-name"
               >
                 <validation-provider
                   #default="{ errors }"
-                  name="اسم المشرف"
+                  name="اسم المندوب"
                   rules="required"
                 >
 
@@ -26,7 +26,7 @@
                     id="v-first-name"
                     v-model="name"
                     :state="errors.length > 0 ? false:null"
-                    placeholder="اسم المشرف "
+                    placeholder="اسم المندوب "
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -49,7 +49,7 @@
                     id="v-first-name"
                     v-model="username"
                     :state="errors.length > 0 ? false:null"
-                    placeholder="اسم المشرف "
+                    placeholder="اسم المستخدم "
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -77,6 +77,27 @@
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </b-form-group>
+      </b-col>
+      <b-col cols="12">
+              <b-form-group
+                label="أماكن الخدمه"
+                label-for="v-servicePlaces"
+              >
+             
+                <multiselect
+                v-model="places"
+                :options="servicePlaces"
+                :multiple="true"
+                :close-on-select="false"
+                trackBy="name"
+                label="name"
+                :clear-on-select="false"
+                :preserve-search="true"
+                placeholder="اختار المحافظات"
+                :preselect-first="false"
+              >
+              </multiselect>
+               </b-form-group>
       </b-col>
             <!-- submit and reset -->
             <b-col cols="12">
@@ -135,7 +156,7 @@
                   <b-form-input
 
                     id="v-first-name"
-                    v-model="admin.name"
+                    v-model="agent.name"
                     :state="errors.length > 0 ? false:null"
                     placeholder="اسم المشرف"
                   />
@@ -158,7 +179,7 @@
                   <b-form-input
 
                     id="v-username"
-                    v-model="admin.username"
+                    v-model="agent.username"
                     :state="errors.length > 0 ? false:null"
                     placeholder="اسم المشرف"
                   />
@@ -179,7 +200,7 @@
             vid="password"
           >
             <b-form-input
-              v-model="admin.password"
+              v-model="agent.password"
               type="password"
               :state="errors.length > 0 ? false : null"
               placeholder="كلمة السر"
@@ -187,6 +208,27 @@
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </b-form-group>
+      </b-col>
+       <b-col cols="12">
+              <b-form-group
+                label="أماكن الخدمه"
+                label-for="v-servicePlaces"
+              >
+             
+                <multiselect
+                v-model="agent.servicePlaces"
+                :options="servicePlaces"
+                :multiple="true"
+                :close-on-select="false"
+                trackBy="name"
+                label="name"
+                :clear-on-select="false"
+                :preserve-search="true"
+                placeholder="اختار المحافظات"
+                :preselect-first="false"
+              >
+              </multiselect>
+               </b-form-group>
       </b-col>
             <!-- submit and reset -->
             <b-col cols="12">
@@ -235,6 +277,7 @@ import {
 import Ripple from 'vue-ripple-directive'
 import store from '@/store/index'
 import router from '@/router'
+import Multiselect from "vue-multiselect";
 import { ValidationProvider, ValidationObserver, localize } from 'vee-validate'
 import { required } from '@validations'
 
@@ -255,6 +298,7 @@ export default {
     BFormCheckbox,
     BForm,
     BButton,
+    Multiselect,
   },
 
   directives: {
@@ -271,8 +315,9 @@ export default {
       name: null,
       username: null,
       password:null,
-      editAdmin: null,
-      admin:null,
+      places:[],
+      servicePlaces:[],
+      editAgent: false,
 
     }
   },
@@ -280,73 +325,81 @@ export default {
 
     // switch to arabic in validation
     localize(this.locale)
+  this.servicePlaces = this.$store.getters.GetServicePlaces; 
     if (this.id) {
-      this.editAdmin = true
-      this.admin = this.$store.getters.GetAdmins.find(i=>i.id == this.$route.params.id)
+      this.editAgent = true
+      this.agent = this.$store.getters.GetAgents.find(i=>i.id == this.$route.params.id)
     }
   },
   methods: {
 
     validationForm() {
-      if (!this.editAdmin) {
+      if (!this.editAgent) {
         this.$refs.simpleRules.validate().then(success => {
           if (success) {
             // eslint-disable-next-line
-            this.AddAdmin();
+            this.AddAgent();
           }
         })
       } else {
         this.$refs.simpleRules.validate().then(success => {
           if (success) {
             // eslint-disable-next-line
-               this.EditAdmin();
+               this.EditAgent();
           }
         })
       }
     },
 
-    AddAdmin() {
-      const admin = {
+    AddAgent() {
+      const agent = {
         id: new Date().toString(),
         name: this.name,
         username: this.username,
-        password:this.password
+        password:this.password,
+        servicePlaces: this.places
+
 
       }
-      store.commit('AddAdmin', admin)
+      store.commit('AddAgent', agent)
       this.$router.push({
-        name: 'admins',
+        name: 'agents',
       })
     },
-    EditAdmin() {
-      if (this.editAdmin) {
-        const admin = {
-          id:this.admin.id,
-          name: this.admin.name,
-          username:this.admin.username,
-          password: this.admin.password,
+    EditAgent() {
+      if (this.editAgent) {
+        const agent = {
+          id:this.agent.id,
+          name: this.agent.name,
+          username:this.agent.username,
+          password: this.agent.password,
+          servicePlaces: this.agent.servicePlaces
 
         }
 
-        store.commit('EditAdmin', admin)
-        router.push('/admins')
+        store.commit('EditAgent', agent)
+        router.push('/agents')
       }
     },
     reset() {
-      if (this.editAdmin) {
-        this.admin.name = null
-        this.admin.username = null
-        this.admin.password = null
+      if (this.editAgent) {
+        this.agent.name = null
+        this.agent.username = null
+        this.agent.password = null
+        this.agent.servicePlaces = null
       } else {
         this.name = null
         this.username = null
         this.password = null
+        this.places = [] 
       }
     },
 
     back() {
-      router.push('/admins')
+      router.push('/agents')
     },
   },
 }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+

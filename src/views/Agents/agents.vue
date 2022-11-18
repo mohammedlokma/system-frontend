@@ -7,9 +7,9 @@
     <button
       style="margin-top: -60px; float: right"
       class="btn btn-primary"
-      @click="AddAdmin"
+      @click="AddAgent"
     >
-      إضافة أدمن
+      إضافة مندوب
     </button>
     
 
@@ -24,17 +24,17 @@
       <div class="col-12 text-center">
         <p><strong>هل انت متأكد من حذف الجميع</strong>؟</p>
         <p
-          v-for="admin in this.admins"
-          :key="admin.id.toString()"
+          v-for="agent in this.agents"
+          :key="agent.id.toString()"
           style="color: red"
         >
-          {{ admin.name }}
+          {{ agent.name }}
         </p>
         <b-button
           variant="primary"
           size="sm"
           class="mt-2 mr-2"
-          @click="DeleteAllAdmins() + $bvModal.hide('modal-dangerr')"
+          @click="DeleteAllagents() + $bvModal.hide('modal-dangerr')"
         >تأكيد</b-button>
         <b-button
           variant="danger"
@@ -48,7 +48,7 @@
     <!-- table -->
     <vue-good-table
       :columns="columns"
-      :rows="this.admins"
+      :rows="this.agents"
       :rtl="direction"
       :search-options="{
         enabled: true,
@@ -87,7 +87,16 @@
           /> -->
           <span class="text-nowrap">{{ props.row.name }}</span>
         </span>
-        <!-- Column: project -->
+        <!-- Column: service places  -->
+        <span v-else-if="props.column.field === 'servicePlaces'"
+         class="text-nowrap"  >
+  <span v-for="place in props.row.servicePlaces " :key="place.id" 
+  class=" btn btn-success" style="margin-right:10px;">
+        
+           {{ place.name }}
+          </span>
+         
+        </span>
        
 
         <!-- Column: Action -->
@@ -95,7 +104,7 @@
           <button
             style="margin-right: 16px"
             class="btn btn-primary"
-            @click="EditAdmin(props.row)"
+            @click="Editagent(props.row)"
           >
             <feather-icon
               icon="EditIcon"
@@ -131,7 +140,7 @@
                 variant="primary"
                 size="sm"
                 class="mt-2 mr-2"
-                @click="DeleteAdmin(props.row.id) + $bvModal.hide(props.row.id.toString())"
+                @click="DeleteAgent(props.row.id) + $bvModal.hide(props.row.id.toString())"
               >تأكيد</b-button>
               <b-button
                 variant="danger"
@@ -248,13 +257,13 @@ export default {
   mounted() {
 
       
-    this.admins = this.$store.getters.GetAdmins;
-    console.log(this.admins)
+    this.agents = this.$store.getters.GetAgents;
+    
   },
   
   data() {
     return {
-     admins:[],
+     agents:[],
       pageLength: 7,
       dir: false,
       codeBasic,
@@ -272,7 +281,15 @@ export default {
           field: 'username',
            filterOptions: {
             enabled: true,
-            placeholder: 'بحث باسم السمتخدم',
+            placeholder: 'بحث باسم المستخدم',
+          },
+        },
+         {
+          label: ' أماكن الخدمة',
+          field: 'servicePlaces',
+           filterOptions: {
+            enabled: true,
+            placeholder: 'بحث باسم أماكن الخدمة',
           },
         },
         
@@ -286,13 +303,13 @@ export default {
     }
   },
   methods: {
-    AddAdmin() {
-      this.$router.push('admin-update')
+    AddAgent() {
+      this.$router.push( 'agent-update' )
     },
 
-    EditAdmin(row) {
+    Editagent(row) {
       this.$router.push({
-        name: 'admin-update',
+        name: 'agent-update',
         // preserve current path and remove the first char to avoid the target URL starting with `//`
         params: {  id:row.id },
         // preserve existing query and hash if any
@@ -300,17 +317,15 @@ export default {
         //hash: `?id=${row.id}`,
       })
     },
-    DeleteAdmin(id) {
-      console.log(id)
-      this.admins = this.admins.filter(i=>i.id !== id);
-      console.log(this.admins)
+    DeleteAgent(id) {
+      this.agents = this.agents.filter(i=>i.id !== id);
 
-      store.commit('DeleteAdmin', id)
+      store.commit('DeleteAgent', id)
     },
 
     DeleteAllAdmins() {
-      this.admins = [];
-      store.commit('DeleteAdmins')
+      this.agents = [];
+      store.commit('DeleteAgents')
     },
   },
   computed: {

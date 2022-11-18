@@ -9,4 +9,14 @@ export default [
     route: 'admins',
     icon: 'UserPlusIcon',
   },
+  {
+    title: 'المندوبين',
+    route: 'agents',
+    icon: 'UserIcon',
+  },
+  {
+    title: 'أماكن الخدمه',
+    route: 'service-places',
+    icon: 'ServerIcon',
+  },
 ]
