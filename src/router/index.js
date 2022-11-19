@@ -86,6 +86,21 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/agent-details/:id?',
+      name: 'agent-details',
+      props: true,
+      component: () => import('@/views/Agents/agent-details.vue'),
+      meta: {
+        pageTitle: 'المندوبين',
+        breadcrumb: [
+          {
+            text: 'تفاصيل مدفوعات مندوب',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/service-places',
       name: 'service-places',
       props:true,

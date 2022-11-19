@@ -51,6 +51,30 @@ export default{
                 name:"وسط البلد"
             }]
         }
+    ],
+    payments:[
+        {
+            id:1,
+            agentId:1,
+            price:20,
+            date: (new Date()).toLocaleDateString("en-US"),
+            details: "دفع كارته",
+        },
+        {
+            id:2,
+            agentId:1,
+            price:20,
+            date: ((new Date("2022-11-23")).toLocaleDateString("en-US") ),
+            details: "فطار",
+        },
+        {
+            id:3,
+            agentId:2,
+            price:20,
+            date: Date.now(),
+            details: "دفع كارته",
+        },
+
     ]
   
   
