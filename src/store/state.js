@@ -57,14 +57,15 @@ export default{
             id:1,
             agentId:1,
             price:20,
-            date: (new Date()).toLocaleDateString("en-US"),
+            //date:((new Date(2022-11-22)).toLocaleDateString("en-US")),
+             date: ((new Date("2022-11-21 11:13:00")).toISOString().split('T')[0]),
             details: "دفع كارته",
         },
         {
             id:2,
             agentId:1,
             price:20,
-            date: ((new Date("2022-11-23")).toLocaleDateString("en-US") ),
+            date: ((new Date("2022-11-24")).toISOString().split('T')[0] ),
             details: "فطار",
         },
         {

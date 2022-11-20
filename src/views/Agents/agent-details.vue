@@ -8,16 +8,19 @@
   <div style="display:flex">
     <b-form-datepicker
     class="date"
+    v-model="from"
       id="datepicker-buttons"
       placeholder="من"
       today-button
       reset-button
       close-button
       locale="en"
+      @click="console.log(this.from)"
     />
         <b-form-datepicker
    class="date"
-      id="datepicker-buttons"
+      id="datepicker-buttonss"
+      v-model="to"
       placeholder="إلى"
       today-button
       reset-button
@@ -69,7 +72,7 @@
     <!-- table -->
     <vue-good-table
       :columns="columns"
-      :rows="this.payments"
+      :rows="this.filteredPayments"
       :rtl="direction"
       :search-options="{
         enabled: true,
@@ -245,6 +248,10 @@ import store from '@/store/index'
 import Ripple from 'vue-ripple-directive'
 import { codeBasic } from '../code'
 import agentCard from './agent-card.vue'
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
+ 
+const moment = extendMoment(Moment);
 
 export default {
   components: {
@@ -272,7 +279,7 @@ props:['id'],
   mounted() {
     if(this.id){
        this.payments =  this.$store.getters.GetClientPayments(this.id)
- 
+
     } 
   },
   
@@ -303,7 +310,8 @@ props:['id'],
           field: 'action',
         },
       ],
-
+        from:new Date('2022-11-20').toISOString().split('T')[0],
+        to:new Date('2022-11-22').toISOString().split('T')[0],
       searchTerm: '',
     }
   },
@@ -336,6 +344,13 @@ props:['id'],
       this.dir = false
       return this.dir
     },
+filteredPayments(){
+console.log(this.from)
+  return (this.payments.filter(i => {var time = (i.date)
+                             return (this.from < time && time < this.to);
+                            }))
+
+}
   },
 
 }
