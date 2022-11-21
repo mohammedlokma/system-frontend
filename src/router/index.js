@@ -131,6 +131,21 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/add-cost/:id?',
+      name: 'add-cost',
+      props:true,
+      component: () => import('@/views/Agents/add-cost.vue'),
+      meta: {
+        pageTitle: 'تفاصيل مندوب',
+        breadcrumb: [
+          {
+            text: 'إضافة عهده',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/projects',
       name: 'projects',
       component: () => import('@/views/projects.vue'),

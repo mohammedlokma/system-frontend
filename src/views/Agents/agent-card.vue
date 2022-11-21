@@ -15,10 +15,25 @@
           <div class="d-flex flex-column ml-1">
             <div class="mb-1">
              <button
-      style="margin-top: -10px; "
+      style="margin-top: -130px; "
       class="btn btn-primary"
+      @click="AddCost(agent.id)"
     >
       إضافة عهده
+    </button>
+     <button
+      style="margin-top: -10px; margin-right:20vh; "
+      class="btn btn-primary"
+      @click="toggle(payment=true)"
+    >
+       المدفوعات
+    </button>
+     <button
+      style="margin-top: -10px; margin-right:5vh; "
+      class="btn btn-primary"
+      @click="toggle(payment=false)"
+    >
+       الاستلامات
     </button>
             </div>
        
@@ -54,6 +69,8 @@
                 icon="DollarSignIcon"
                 size="18"
               />
+
+
             </b-avatar>
             <div class="ml-1">
               <h5 class="mb-0">
@@ -121,7 +138,7 @@
               <span class="font-weight-bold">العهده</span>
             </th>
             <td class="pb-50">
-              2222
+              {{agent.cost}}
             </td>
           </tr>
           
@@ -147,7 +164,19 @@ mounted(){
 },
 data(){
   return{
-    agent:{}
+    agent:{},
+    payment:false,
+  }
+},
+methods:{
+  AddCost(id){
+    this.$router.push({
+      name:"add-cost",
+      params:{id:id}
+    })
+  },
+  toggle(payment){
+    this.$emit('toggle',payment)
   }
 }
 

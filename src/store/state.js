@@ -38,7 +38,8 @@ export default{
             {
                 id:2,
                 name:"وسط البلد"
-            }]
+            }],
+            cost:0,
         },
         {
             id:2,
@@ -49,7 +50,8 @@ export default{
             {
                 id:2,
                 name:"وسط البلد"
-            }]
+            }],
+            cost:0
         }
     ],
     payments:[
@@ -76,6 +78,22 @@ export default{
             details: "دفع كارته",
         },
 
+    ],
+    receipts:[
+        {
+            id:1,
+            agentId:1,
+            companyId:1,
+            details:"استلمت من شركة كذا",
+            date:((new Date("2022-11-21")).toISOString().split('T')[0]),
+        },
+        {
+            id:2,
+            agentId:1,
+            companyId:1,
+            details:"استلمت من شركة كذا",
+            date:((new Date("2022-11-24")).toISOString().split('T')[0]),
+        },
     ]
   
   

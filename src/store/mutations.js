@@ -52,4 +52,9 @@ export default{
       DeletePlaces(state){
         state.servicePlaces.splice(0,state.servicePlaces.length);
       },
+      AddCost(state,payload){
+        let agent = state.agents.find(i=>i.id == payload.id)
+        agent.cost += payload.cost
+        console.log(typeof(agent.cost))
+      }
 }
