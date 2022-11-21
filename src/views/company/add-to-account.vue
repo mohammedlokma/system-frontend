@@ -9,11 +9,11 @@
 
           <b-row>
 
-            <!--  cost -->
-            <b-col cols="12">
+            <!--  price -->
+            <b-col cols="6">
               <b-form-group
                 label="المبلغ"
-                label-for="v-cost"
+                label-for="v-price"
               >
                 <validation-provider
                   #default="{ errors }"
@@ -22,8 +22,8 @@
                 >
 
                   <b-form-input
-                    id="v-cost"
-                    v-model.number="cost"
+                    id="v-price"
+                    v-model.number="price"
                     type="number"
                     :state="errors.length > 0 ? false:null"
                     placeholder=" المبلغ بالجنيه"
@@ -32,7 +32,44 @@
                 </validation-provider>
               </b-form-group>
             </b-col>
+
+    <b-col cols="6">
+              <b-form-group
+                label="التاريخ"
+                label-for="v-price"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="التاريخ"
+                  rules="required"
+                >
+                   <b-form-datepicker
+                        class="date"
+                        v-model="date"
+                        id="datepicker-buttons"
+                        placeholder="تاريخ الفاتورة"
+                        today-button
+                        reset-button
+                        close-button
+                        locale="en"
+                        />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
    
+            <b-col cols="6">
+              <b-form-group
+                label="التفاصيل"
+                label-for="v-details"
+              >
+                  <b-form-input
+                    id="v-details"
+                    v-model="details"
+                    placeholder="التفاصيل"
+                  />
+              </b-form-group>
+            </b-col>
             <!-- submit and reset -->
             <b-col cols="12">
               <b-button
@@ -69,7 +106,7 @@
 <script>
 import BCardCode from '@core/components/b-card-code/BCardCode.vue'
 import {
-  BFormCheckboxGroup, BFormRadio, BDropdown, BDropdownItem, BDropdownDivider, BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton,
+  BFormDatepicker, BFormCheckboxGroup, BFormRadio, BDropdown, BDropdownItem, BDropdownDivider, BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import store from '@/store/index'
@@ -94,6 +131,7 @@ export default {
     BFormCheckbox,
     BForm,
     BButton,
+    BFormDatepicker,
   },
 
   directives: {
@@ -107,12 +145,13 @@ export default {
       locale: 'ar',
       // for validation
       required,
-      cost:null,
+      price:null,
+      date:null,
+      details:''
 
     }
   },
   mounted() {
-
     // switch to arabic in validation
     localize(this.locale)
   },
@@ -123,22 +162,23 @@ export default {
         this.$refs.simpleRules.validate().then(success => {
           if (success) {
             // eslint-disable-next-line
-            this.AddCost();
+            this.AddToAccount();
           }
         })
     },
 
-    AddCost() {
-    const payload = {id:this.id,cost:this.cost}
-       store.commit('AddCost',payload)
+    AddToAccount() {
+    const payload = {companyId:this.id,price:this.price,
+    date:this.date,details:this.details}
+       store.commit('AddToAccount',payload)
        this.$router.push({
-        name:'agent-details',
+        name:'company-details',
         params:{id:this.id}
       })
     },
     back() {
       this.$router.push({
-        name:'agent-details',
+        name:'company-details',
         params:{id:this.id}
       })
     },

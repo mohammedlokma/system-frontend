@@ -19,4 +19,9 @@ export default [
     route: 'service-places',
     icon: 'ServerIcon',
   },
+  {
+    title: 'الشركات',
+    route: 'companies',
+    icon: 'ServerIcon',
+  },
 ]

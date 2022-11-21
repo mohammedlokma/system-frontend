@@ -149,13 +149,58 @@ const router = new VueRouter({
     //companies
     {
       path: '/companies',
-      name: 'projects',
-      component: () => import('@/views/company/companies.vue'),
+      name: 'companies',
+      component: () => import('@/views/Company/companies.vue'),
       meta: {
         pageTitle: 'الشركات',
         breadcrumb: [
           {
             text: 'الشركات',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/comapny-details/:id?',
+      name: 'company-details',
+      props:true,
+      component: () => import('@/views/Company/company-details.vue'),
+      meta: {
+        pageTitle: 'الشركات',
+        breadcrumb: [
+          {
+            text: 'تفاصيل شركة',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/add-to-account/:id?',
+      name: 'add-to-account',
+      props:true,
+      component: () => import('@/views/Company/add-to-account.vue'),
+      meta: {
+        pageTitle: 'تفاصيل شركة',
+        breadcrumb: [
+          {
+            text: 'إضافة دفع',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/add-bill/:id?',
+      name: 'add-bill',
+      props:true,
+      component: () => import('@/views/Company/add-bill.vue'),
+      meta: {
+        pageTitle: 'تفاصيل شركة',
+        breadcrumb: [
+          {
+            text: 'إضافة فاتورة',
             active: true,
           },
         ],

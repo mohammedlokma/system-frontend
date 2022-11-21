@@ -1,17 +1,27 @@
 <template>
-  <b-card-code
-    title=""
-    style="margin-top: 30px"
-  >
-  
-    <button
-      style="margin-top: -60px; float: right"
-      class="btn btn-primary"
-      @click="AddAgent"
-    >
-      إضافة مندوب
-    </button>
-    
+<div>
+<div  style="display:flex">
+    <b-form-datepicker
+    class="date"
+    v-model="from"
+      id="datepicker-buttons"
+      placeholder="من"
+      today-button
+      reset-button
+      close-button
+      locale="en"
+    />
+        <b-form-datepicker
+   class="date"
+      id="datepicker-buttonss"
+      v-model="to"
+      placeholder="إلى"
+      today-button
+      reset-button
+      close-button
+      locale="en"
+    />
+  </div>
 
     <b-modal
       id="modal-dangerr"
@@ -24,17 +34,17 @@
       <div class="col-12 text-center">
         <p><strong>هل انت متأكد من حذف الجميع</strong>؟</p>
         <p
-          v-for="agent in this.agents"
-          :key="agent.id.toString()"
+          v-for="payment in this.payments"
+          :key="payment.id.toString()"
           style="color: red"
         >
-          {{ agent.name }}
+          {{ payment.id }}
         </p>
         <b-button
           variant="primary"
           size="sm"
           class="mt-2 mr-2"
-          @click="DeleteAllAgents() + $bvModal.hide('modal-dangerr')"
+          @click="DeleteAllPayments() + $bvModal.hide('modal-dangerr')"
         >تأكيد</b-button>
         <b-button
           variant="danger"
@@ -48,7 +58,7 @@
     <!-- table -->
     <vue-good-table
       :columns="columns"
-      :rows="this.agents"
+      :rows="this.filteredPayments"
       :rtl="direction"
       :search-options="{
         enabled: true,
@@ -59,12 +69,26 @@
         perPage: pageLength,
       }"
     >
-     <template  slot="table-column" slot-scope="props">
+     <template  slot="table-column" slot-scope="props" >
      <span  v-if="props.column.label =='التفاصيل'">
       <span>التفاصيل</span>
+      <button
+      
+     style="padding: 4px;
+    margin-left: -37vh;
+    margin-right: 3vh;"
+      class="btn btn-primary"
+    > 
+    <feather-icon
+                icon="FileTextIcon"
+                size="18"
+              />
+    
+     طباعة تقرير كامل
+    </button>
         <button
       v-b-modal.modal-dangerr
-     style="float:left;padding-top:0px"
+     style="float:left;padding: 8px;"
       class="btn btn-danger"
     > 
       حذف الكل
@@ -76,51 +100,18 @@
         slot="table-row"
         slot-scope="props"
       >
-        <!-- Column: Name -->
+        <!-- Column: Price -->
         <span
-          v-if="props.column.field === 'name'"
+          v-if="props.column.field === 'price'"
           class="text-nowrap"
         >
-          <!-- <b-avatar
-            :src="props.row.avatar"
-            class="mx-1"
-          /> -->
-          <span class="text-nowrap">{{ props.row.name }}</span>
-        </span>
-        <!-- Column: service places  -->
-        <span v-else-if="props.column.field === 'servicePlaces'"
-         class="text-nowrap"  >
-  <span v-for="place in props.row.servicePlaces " :key="place.id" 
-  class=" btn btn-success" style="margin-right:10px;">
         
-           {{ place.name }}
-          </span>
-         
+          <span class="text-nowrap">{{ props.row.price }}</span>
         </span>
-       
 
         <!-- Column: Action -->
         <span v-else-if="props.column.field === 'action'">
-           <button
-            style="margin-right: 16px"
-            class="btn btn-primary"
-            @click="ViewDetails(props.row.id)"
-          >
-          <feather-icon
-              icon="EyeIcon"
-              size="12"
-            />
-           </button>
-          <button
-            style="margin-right: 16px"
-            class="btn btn-primary"
-            @click="Editagent(props.row)"
-          >
-            <feather-icon
-              icon="EditIcon"
-              size="12"
-            />
-          </button>
+   
 
           <button
             v-ripple.400="'rgba(234, 84, 85, 0.15)'"
@@ -144,13 +135,13 @@
           >
             <div class="col-12 text-center">
               <p>
-                <strong>هل انت متأكد من حذف</strong><strong style="color: red; padding: 5px">{{ props.row.name }}</strong>؟
+                <strong>هل انت متأكد من حذف</strong><strong style="color: red; padding: 5px">{{ props.row.id }}</strong>؟
               </p>
               <b-button
                 variant="primary"
                 size="sm"
                 class="mt-2 mr-2"
-                @click="DeleteAgent(props.row.id) + $bvModal.hide(props.row.id.toString())"
+                @click="DeletePayment(props.row.id) + $bvModal.hide(props.row.id.toString())"
               >تأكيد</b-button>
               <b-button
                 variant="danger"
@@ -215,13 +206,9 @@
         </div>
       </template>
     </vue-good-table>
-
-    <template #code>
-      {{ codeBasic }}
+    </div>
     </template>
-  </b-card-code>
-</template>
-
+        
 <script>
 import BCardCode from '@core/components/b-card-code/BCardCode.vue'
 import {
@@ -236,17 +223,16 @@ import {
   BFormSelect,
   BDropdown,
   BDropdownItem,
+  BFormDatepicker 
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import store from '@/store/index'
 import Ripple from 'vue-ripple-directive'
 import { codeBasic } from '../code'
-
 export default {
   components: {
     BCardCode,
     VueGoodTable,
-
     BButton,
     BModal,
     BAvatar,
@@ -257,6 +243,7 @@ export default {
     BFormSelect,
     BDropdown,
     BDropdownItem,
+    BFormDatepicker 
   },
 
   directives: {
@@ -266,90 +253,60 @@ export default {
 props:['id'],
   mounted() {
     if(this.id){
-       this.agents =  this.$store.getters.GetAgents.filter(i => 
-                i.servicePlaces.some(s => s.id == this.id)
-                
-            );
-    }
-    else{
-    this.agents = this.$store.getters.GetAgents;
-    }
-    
+       this.payments =  this.$store.getters.GetCompanyPayments(this.id)
+
+    } 
   },
   
   data() {
     return {
-     agents:[],
+     payments:[],
       pageLength: 7,
       dir: false,
       codeBasic,
       columns: [
         {
-          label: 'الاسم',
-          field: 'name',
-           filterOptions: {
-            enabled: true,
-            placeholder: 'بحث بالاسم ',
-          },
-        },
-        {
-          label: 'اسم المستخدم',
-          field: 'username',
-           filterOptions: {
-            enabled: true,
-            placeholder: 'بحث باسم المستخدم',
-          },
+          label: 'السعر',
+          field: 'price',
+          
         },
          {
-          label: ' أماكن الخدمة',
-          field: 'servicePlaces',
-           filterOptions: {
-            enabled: true,
-            placeholder: 'بحث باسم أماكن الخدمة',
-          },
+          label: 'التاريخ',
+          field: 'date',
+          
         },
-        
+        {
+          label: 'البيان',
+          field: 'details',
+          
+        },
         {
           label: 'التفاصيل',
           field: 'action',
         },
       ],
-
+        from:new Date('2022-11-20').toISOString().split('T')[0],
+        to:new Date('2022-11-22').toISOString().split('T')[0],
       searchTerm: '',
     }
   },
   methods: {
     AddAgent() {
-      this.$router.push( 'agent-update' )
+     
     },
 
-    Editagent(row) {
-      this.$router.push({
-        name: 'agent-update',
-        // preserve current path and remove the first char to avoid the target URL starting with `//`
-        params: {  id:row.id },
-        // preserve existing query and hash if any
-        query: this.$route.query,
-        //hash: `?id=${row.id}`,
-      })
-    },
-    DeleteAgent(id) {
-      this.agents = this.agents.filter(i=>i.id !== id);
 
-      store.commit('DeleteAgent', id)
+    DeletePayment(id) {
+       this.payments = this.payments.filter(i=>i.id !== id);
+
+       store.commit('DeletePayment', id)
     },
 
-    DeleteAllAgents() {
-      this.agents = [];
-      store.commit('DeleteAgents')
+    DeleteAllPayments() {
+       this.payments = [];
+      store.commit('DeletePayments')
     },
-    ViewDetails(id){
-      this.$router.push({
-        name:'agent-details',
-        params:{id:id},
-        //hash
-      })
-    },
+ 
   },
   computed: {
     direction() {
@@ -362,6 +319,12 @@ props:['id'],
       this.dir = false
       return this.dir
     },
+filteredPayments(){
+  return (this.payments.filter(i => {var time = (i.date)
+                             return (this.from < time && time < this.to);
+                            }))
+
+}
   },
 
 }
@@ -369,7 +332,15 @@ props:['id'],
 
 <style lang="scss">
 @import "@core/scss/vue/libs/vue-good-table.scss";
+.date{
+    max-width: 400px;
+    padding: 1;
+    margin-right: 9vh;
+    margin-bottom: 4vh;
+}
 .vgt-left-align{
-    width: 25%;
+    max-width: 100px;
 }
 </style>
+
+    

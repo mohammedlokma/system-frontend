@@ -9,7 +9,7 @@
         class="btn btn-primary"
         @click="AddCompany"
       >
-        إضافة مندوب
+        إضافة شركة
       </button>
       
   
@@ -24,7 +24,7 @@
         <div class="col-12 text-center">
           <p><strong>هل انت متأكد من حذف الجميع</strong>؟</p>
           <p
-            v-for="company in this.companys"
+            v-for="company in this.companies"
             :key="company.id.toString()"
             style="color: red"
           >
@@ -48,7 +48,7 @@
       <!-- table -->
       <vue-good-table
         :columns="columns"
-        :rows="this.companys"
+        :rows="this.companies"
         :rtl="direction"
         :search-options="{
           enabled: true,
@@ -139,7 +139,7 @@
                   variant="primary"
                   size="sm"
                   class="mt-2 mr-2"
-                  @click="Deletecompany(props.row.id) + $bvModal.hide(props.row.id.toString())"
+                  @click="DeleteCompany(props.row.id) + $bvModal.hide(props.row.id.toString())"
                 >تأكيد</b-button>
                 <b-button
                   variant="danger"
@@ -252,23 +252,13 @@
       'b-modal': VBModal,
       Ripple,
     },
-  props:['id'],
     mounted() {
-      if(this.id){
-         this.companys =  this.$store.getters.Getcompanys.filter(i => 
-                  i.servicePlaces.some(s => s.id == this.id)
-                  
-              );
-      }
-      else{
-      this.companys = this.$store.getters.Getcompanys;
-      }
-      
+         this.companies =  this.$store.getters.GetCompanies;
     },
     
     data() {
       return {
-       companys:[],
+       companies:[],
         pageLength: 7,
         dir: false,
         codeBasic,
@@ -298,7 +288,7 @@
   
       EditCompany(row) {
         this.$router.push({
-          name: 'company-update',
+          name: 'company-details',
           // preserve current path and remove the first char to avoid the target URL starting with `//`
           params: {  id:row.id },
           // preserve existing query and hash if any
@@ -307,13 +297,13 @@
         })
       },
       DeleteCompany(id) {
-        this.companys = this.companys.filter(i=>i.id !== id);
+        this.companies = this.companies.filter(i=>i.id !== id);
   
         store.commit('DeleteCompany', id)
       },
   
       DeleteAllCompanies() {
-        this.companys = [];
+        this.companies = [];
         store.commit('DeleteCompanies')
       },
       ViewDetails(id){
