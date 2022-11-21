@@ -1,18 +1,4 @@
 export default{
-    admins:[
-        {
-            id:1,
-            name:"أحمد",
-            username:"ahmed",
-            password:"123"
-        },
-        {
-            id:2,
-            name:"محمد",
-            username:"mohamed",
-            password:"123"
-        }
-    ],
     servicePlaces:[
         {
             id:1,
@@ -94,7 +80,5 @@ export default{
             details:"استلمت من شركة كذا",
             date:((new Date("2022-11-24")).toISOString().split('T')[0]),
         },
-    ]
-  
-  
+    ],
 }

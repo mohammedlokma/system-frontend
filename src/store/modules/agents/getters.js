@@ -1,8 +1,5 @@
 export default{
-    //admins
-GetAdmins(state){
-    return state.admins;
-  },
+    
   //agents
   GetAgents(state){
     return state.agents;
@@ -17,6 +14,5 @@ GetAdmins(state){
   GetClientReceipts:(state)=> (id) =>{
     return state.receipts
       .filter(i=>i.agentId == id)
-  }
-  
+  },
 }

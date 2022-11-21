@@ -15,7 +15,7 @@
           <div class="d-flex flex-column ml-1">
             <div class="mb-1">
              <button
-      style="margin-top: -130px; "
+      style="margin-top: -80px; "
       class="btn btn-primary"
       @click="AddCost(agent.id)"
     >
@@ -160,7 +160,6 @@ export default {
 props:['id'],
 mounted(){
   this.agent = this.$store.getters.GetAgents.find(i=>i.id == this.id)
-  console.log(this.agent)
 },
 data(){
   return{

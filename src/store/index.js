@@ -5,20 +5,21 @@ import Vuex from 'vuex'
 import app from './app'
 import appConfig from './app-config'
 import verticalMenu from './vertical-menu'
-import mutations from './mutations.js'
-import getters from './getters.js'
-import state from './state.js'
+import admins from './modules/admins'
+import agents from './modules/agents'
+import company from './modules/company'
+
 Vue.use(Vuex)
 
 export default  new Vuex.Store({
-  state:state,
-  mutations: mutations,
-  getters: getters,
 
   modules: {
     app,
     appConfig,
     verticalMenu,
+    admins:admins,
+    agents:agents,
+    company:company,
   },
   strict: process.env.DEV,
 })

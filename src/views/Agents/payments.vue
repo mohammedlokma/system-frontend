@@ -289,7 +289,6 @@ props:['id'],
         from:new Date('2022-11-20').toISOString().split('T')[0],
         to:new Date('2022-11-22').toISOString().split('T')[0],
       searchTerm: '',
-      toggleTables:false
     }
   },
   methods: {
@@ -322,7 +321,6 @@ props:['id'],
       return this.dir
     },
 filteredPayments(){
-console.log(this.from)
   return (this.payments.filter(i => {var time = (i.date)
                              return (this.from < time && time < this.to);
                             }))

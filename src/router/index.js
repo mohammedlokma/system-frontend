@@ -145,6 +145,23 @@ const router = new VueRouter({
         ],
       },
     },
+
+    //companies
+    {
+      path: '/companies',
+      name: 'projects',
+      component: () => import('@/views/company/companies.vue'),
+      meta: {
+        pageTitle: 'الشركات',
+        breadcrumb: [
+          {
+            text: 'الشركات',
+            active: true,
+          },
+        ],
+      },
+    },
+
     {
       path: '/projects',
       name: 'projects',

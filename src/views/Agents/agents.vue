@@ -34,7 +34,7 @@
           variant="primary"
           size="sm"
           class="mt-2 mr-2"
-          @click="DeleteAllagents() + $bvModal.hide('modal-dangerr')"
+          @click="DeleteAllAgents() + $bvModal.hide('modal-dangerr')"
         >تأكيد</b-button>
         <b-button
           variant="danger"
@@ -339,7 +339,7 @@ props:['id'],
       store.commit('DeleteAgent', id)
     },
 
-    DeleteAllAdmins() {
+    DeleteAllAgents() {
       this.agents = [];
       store.commit('DeleteAgents')
     },
@@ -369,4 +369,7 @@ props:['id'],
 
 <style lang="scss">
 @import "@core/scss/vue/libs/vue-good-table.scss";
+.vgt-left-align{
+    max-width: 25%;
+}
 </style>
