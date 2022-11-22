@@ -207,36 +207,22 @@ const router = new VueRouter({
       },
     },
 
+    //safe
     {
-      path: '/projects',
-      name: 'projects',
-      component: () => import('@/views/projects.vue'),
+      path: '/safe',
+      name: 'safe',
+      component: () => import('@/views/Safe/safe.vue'),
       meta: {
-        pageTitle: 'المشاريع',
+        pageTitle: 'الخزنة',
         breadcrumb: [
           {
-            text: 'المشاريع',
+            text: 'تفاصيل الخزنة',
             active: true,
           },
         ],
       },
     },
-    {
-      path: '/projectUpdate',
-      props: true,
-      name: 'projectUpdate',
-      component: () => import('@/views/projectUpdate.vue'),
-      meta: {
-        pageTitle: 'المشاريع',
-        breadcrumb: [
-          {
-            text: 'تحديث مشروع',
-            active: true,
-          },
-        ],
-      },
-    },
-    
+   
     {
       path: '/login',
       name: 'login',

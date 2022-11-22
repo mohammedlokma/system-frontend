@@ -27,6 +27,7 @@ export default{
         id:new Date(),
         companyId: payload.companyId,
         price:payload.price,
+        type:payload.type,
         date:payload.date,
         details:payload.details
 
@@ -39,6 +40,17 @@ export default{
 
     DeletePayments(state){
       state.payments.splice(0,state.payments.length);
+    },
+    AddBill(state,payload){
+      state.bills.push(payload)
+      console.log(state.bills)
+
+    },
+    AddBillDetails(state,payload){
+      for(var i=0 ;i< payload.length; i++){
+        state.billDetails.push(payload[i])
+      }
+      console.log(state.billDetails)
     },
     DeleteBill(state,id){
       state.bills = state.bills.filter(i => i.id !==  id);

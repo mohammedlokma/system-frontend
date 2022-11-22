@@ -22,6 +22,11 @@ export default [
   {
     title: 'الشركات',
     route: 'companies',
-    icon: 'ServerIcon',
+    icon: 'ShoppingBagIcon',
+  },
+  {
+    title: 'الخزنة',
+    route: 'safe',
+    icon: 'DatabaseIcon',
   },
 ]

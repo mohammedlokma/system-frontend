@@ -34,7 +34,7 @@
       <div class="col-12 text-center">
         <p><strong>هل انت متأكد من حذف الجميع</strong>؟</p>
         <p
-          v-for="payment in this.bills"
+          v-for="payment in this.output"
           :key="payment.id.toString()"
           style="color: red"
         >
@@ -44,7 +44,7 @@
           variant="primary"
           size="sm"
           class="mt-2 mr-2"
-          @click="DeleteAllBills() + $bvModal.hide('modal-dangerr')"
+          @click="DeleteAllOutput() + $bvModal.hide('modal-dangerr')"
         >تأكيد</b-button>
         <b-button
           variant="danger"
@@ -58,7 +58,7 @@
     <!-- table -->
     <vue-good-table
       :columns="columns"
-      :rows="this.filteredBills"
+      :rows="this.filteredOutputs"
       :rtl="direction"
       :search-options="{
         enabled: true,
@@ -111,17 +111,6 @@
 
         <!-- Column: Action -->
         <span v-else-if="props.column.field === 'action'">
-   
- <button
-            style="margin-right: 16px"
-            class="btn btn-primary"
-            @click="ViewDetails(props.row.id)"
-          >
-          <feather-icon
-              icon="EyeIcon"
-              size="12"
-            />
-           </button>
           <button
             v-ripple.400="'rgba(234, 84, 85, 0.15)'"
             variant="outline-danger"
@@ -259,24 +248,20 @@ export default {
     'b-modal': VBModal,
     Ripple,
   },
-props:['id'],
   mounted() {
-    if(this.id){
-       this.bills =  this.$store.getters.GetCompanyBills(this.id)
-
-    } 
+       this.output =  this.$store.getters.GetSafeOutput;
   },
   
   data() {
     return {
-     bills:[],
+     output:[],
       pageLength: 7,
       dir: false,
       codeBasic,
       columns: [
         {
-          label: 'الإجمالي',
-          field: 'total',
+          label: 'المبلغ',
+          field: 'price',
           
         },
          {
@@ -285,8 +270,8 @@ props:['id'],
           
         },
         {
-          label: 'العنوان',
-          field: 'title',
+          label: 'البيان',
+          field: 'details',
           
         },
         {
@@ -300,23 +285,8 @@ props:['id'],
     }
   },
   methods: {
- ViewDetails(){
-
- },
-
-
-    DeleteBill(id) {
-       this.bills = this.bills.filter(i=>i.id !== id);
-
-       store.commit('DeleteBill', id)
-    },
-
-    DeleteAllBills() {
-       this.bills = [];
-       store.commit('DeleteBills')
-    },
-
- 
+        DeleteAllOutput(){},
+    DeleteOutput(){}
   },
   computed: {
     direction() {
@@ -329,8 +299,8 @@ props:['id'],
       this.dir = false
       return this.dir
     },
-filteredBills(){
-  return (this.bills.filter(i => {var time = (i.date)
+filteredOutputs(){
+  return (this.output.filter(i => {var time = (i.date)
                              return (this.from < time && time < this.to);
                             }))
 

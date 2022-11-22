@@ -19,6 +19,7 @@ export default{
             //date:((new Date(2022-11-22)).toLocaleDateString("en-US")),
              date: ((new Date("2022-11-21 11:13:00")).toISOString().split('T')[0]),
             details: "دفع اول",
+            type:"كاش"
         },
         {
             id:2,
@@ -26,6 +27,7 @@ export default{
             price:20,
             date: ((new Date("2022-11-24")).toISOString().split('T')[0] ),
             details: "دفع ثاني",
+            type:"شيك"
         },
         
 
@@ -34,15 +36,15 @@ export default{
         {
             id:1,
             companyId:1,
-            price:100,
-            details:"فاتورة 1 ",
+            total:100,
+            title:"فاتورة 1 ",
             date:((new Date("2022-11-21")).toISOString().split('T')[0]),
         },
         {
             id:2,
             companyId:1,
-            price:20,
-            details:"فاتورة 2",
+            total:20,
+            title:"فاتورة 2",
             date:((new Date("2022-11-24")).toISOString().split('T')[0]),
         },
     ],
@@ -50,6 +52,7 @@ export default{
         {
             id:1,
             billId:1,
+            companyId:1,
             price:20,
             details:"دفع فاتورة جمركية",
         }

@@ -36,7 +36,7 @@
     <b-col cols="6">
               <b-form-group
                 label="التاريخ"
-                label-for="v-price"
+                label-for="v-date"
               >
                 <validation-provider
                   #default="{ errors }"
@@ -48,6 +48,7 @@
                         v-model="date"
                         id="datepicker-buttons"
                         placeholder="تاريخ الفاتورة"
+                        :state="errors.length > 0 ? false:null"
                         today-button
                         reset-button
                         close-button
@@ -70,6 +71,31 @@
                   />
               </b-form-group>
             </b-col>
+             <b-col cols="6">
+              <b-form-group
+                label="النوع"
+                label-for="v-type"
+              >
+              <validation-provider
+                  #default="{ errors }"
+                  name="نوع الدفع"
+                  rules="required"
+                >
+                  <b-dropdown
+      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+      :text="type ==null ? 'نوع الدفع': type"
+      v-model='type'
+      :state="errors.length > 0 ? false:null"
+      variant="outline-primary"
+    >
+      <b-dropdown-item value="كاش" @click="type='كاش'">كاش</b-dropdown-item>
+      <b-dropdown-item value="شيك" @click="type='شيك'">شيك</b-dropdown-item>
+    </b-dropdown>
+         <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+           
             <!-- submit and reset -->
             <b-col cols="12">
               <b-button
@@ -147,7 +173,8 @@ export default {
       required,
       price:null,
       date:null,
-      details:''
+      details:'',
+      type:null
 
     }
   },
@@ -169,7 +196,7 @@ export default {
 
     AddToAccount() {
     const payload = {companyId:this.id,price:this.price,
-    date:this.date,details:this.details}
+    date:this.date,type:this.type,details:this.details}
        store.commit('AddToAccount',payload)
        this.$router.push({
         name:'company-details',

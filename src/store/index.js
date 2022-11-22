@@ -8,6 +8,7 @@ import verticalMenu from './vertical-menu'
 import admins from './modules/admins'
 import agents from './modules/agents'
 import company from './modules/company'
+import safe from './modules/safe'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default  new Vuex.Store({
     admins:admins,
     agents:agents,
     company:company,
+    safe:safe,
   },
   strict: process.env.DEV,
 })

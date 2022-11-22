@@ -15,32 +15,32 @@
           <div class="d-flex flex-column ml-1">
             <div class="mb-1">
              <button
-      style="margin-top: -80px; "
+      style="margin-top: -80px; margin-right:-6vh"
       class="btn btn-primary"
-      @click="AddPayment(company.id)"
+      @click="AddIncome()"
     >
-      إضافة دفع
+      إضافة مبلغ للخزنة
     </button>
         <button
       style="margin-top: -80px; margin-right:5vh "
       class="btn btn-primary"
-      @click="AddBill(company.id)"
+      @click="AddOut()"
     >
-      إضافة فاتورة
+       سحب مبلغ من الخزنة
     </button>
      <button
-      style="margin-top: -10px; margin-right:8vh; "
+      style="margin-top: -10px; margin-right:7vh; "
       class="btn btn-primary"
-      @click="toggle(payment=true)"
+      @click="toggle(out=true)"
     >
-       المدفوعات
+       المدخلات
     </button>
      <button
       style="margin-top: -10px; margin-right:5vh; "
       class="btn btn-primary"
-      @click="toggle(payment=false)"
+      @click="toggle(out=false)"
     >
-       الفواتير
+       المخرجات
     </button>
             </div>
        
@@ -89,40 +89,7 @@
         </div>
       </b-col>
 
-      <!-- Right Col: Table -->
-      <b-col
-        cols="12"
-        xl="6"
-      >
-        <table class="mt-2 mt-xl-0 w-100">
-          <tr>
-            <th style="width:120px" class="pb-50">
-              <feather-icon
-                icon="UserIcon"
-                class="mr-75"
-              />
-              <span class="font-weight-bold">الاسم</span>
-            </th>
-            <td class="pb-50">
-              {{this.company.name}}
-            </td>
-          </tr>
-          <tr>
-            <th style="width:120px" class="pb-50">
-              <feather-icon
-                icon="FlagIcon"
-                class="mr-75"
-              />
-              <span class="font-weight-bold">الحساب</span>
-            </th>
-            <td class="pb-50">
-              {{this.company.account}}
-            </td>
-          </tr>
-
-          
-        </table>
-      </b-col>
+     
     </b-row>
   </b-card>
 </template>
@@ -136,32 +103,26 @@ export default {
   components: {
     BCard, BButton, BRow, BCol, BAvatar,
   },
-props:['id'],
 mounted(){
-  this.company = this.$store.getters.GetCompany(this.id)[0]
-  console.log(this.company)
 },
 data(){
   return{
-    company:{},
-    payment:false,
+    out:false,
   }
 },
 methods:{
-  AddPayment(id){
+  AddIncome(){
     this.$router.push({
       name:"add-to-account",
-      params:{id:id}
     })
   },
-  AddBill(id){
+  AddOut(){
     this.$router.push({
       name:"add-bill",
-      params:{id:id}
     })
   },
-  toggle(payment){
-    this.$emit('toggle',payment)
+  toggle(out){
+    this.$emit('toggle',out)
   }
 }
 

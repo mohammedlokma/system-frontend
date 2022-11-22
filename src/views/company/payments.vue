@@ -275,6 +275,11 @@ props:['id'],
           field: 'date',
           
         },
+         {
+          label: 'النوع',
+          field: 'type',
+          
+        },
         {
           label: 'البيان',
           field: 'details',
@@ -339,7 +344,7 @@ filteredPayments(){
     margin-bottom: 4vh;
 }
 .vgt-left-align{
-    max-width: 100px;
+    max-width: 80px;
 }
 </style>
 
