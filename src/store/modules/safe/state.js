@@ -1,5 +1,5 @@
 export default{
-    total:0,
+    total:4550,
     income:[
         {
             id:1,

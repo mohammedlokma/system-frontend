@@ -88,7 +88,22 @@
           </div>
         </div>
       </b-col>
-
+<div style="margin-top: -7vh;
+    margin-right: 30vh;">
+      <!-- statics -->
+      <statistic-card-vertical
+        style="
+          
+          min-width: 150px;
+          font-size: 20px;
+          border-radius: 40%;
+        "
+        icon="DollarSignIcon"
+        color="info"
+        :statistic="total"
+        statistic-title="إجمالي الأموال"
+      />
+    </div>
      
     </b-row>
   </b-card>
@@ -98,27 +113,30 @@
 import {
   BCard, BButton, BAvatar, BRow, BCol,
 } from 'bootstrap-vue'
+import StatisticCardVertical from '@core/components/statistics-cards/StatisticCardVertical.vue'
 
 export default {
   components: {
-    BCard, BButton, BRow, BCol, BAvatar,
+    BCard, BButton, BRow, BCol, BAvatar,StatisticCardVertical
   },
 mounted(){
+  this.total = this.$store.getters.GetSafeTotal
 },
 data(){
   return{
     out:false,
+    total:null,
   }
 },
 methods:{
   AddIncome(){
     this.$router.push({
-      name:"add-to-account",
+      name:"add-income",
     })
   },
   AddOut(){
     this.$router.push({
-      name:"add-bill",
+      name:"add-out",
     })
   },
   toggle(out){

@@ -222,7 +222,48 @@ const router = new VueRouter({
         ],
       },
     },
-   
+    {
+      path: '/safe',
+      name: 'safe',
+      component: () => import('@/views/Safe/safe.vue'),
+      meta: {
+        pageTitle: 'الخزنة',
+        breadcrumb: [
+          {
+            text: 'تفاصيل الخزنة',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/add-income',
+      name: 'add-income',
+      component: () => import('@/views/Safe/add-income.vue'),
+      meta: {
+        pageTitle: 'الخزنة',
+        breadcrumb: [
+          {
+            text: 'إضافة مبلغ الخزنة',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/add-out',
+      name: 'add-out',
+      component: () => import('@/views/Safe/add-out.vue'),
+      meta: {
+        pageTitle: 'الخزنة',
+        breadcrumb: [
+          {
+            text: 'سحب مبلغ من الخزنة',
+            active: true,
+          },
+        ],
+      },
+    },
     {
       path: '/login',
       name: 'login',
