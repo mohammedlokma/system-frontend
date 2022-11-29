@@ -90,6 +90,13 @@
 
           <!-- Column: Action -->
           <span v-else-if="props.column.field === 'action'">
+            <button
+              style="margin-right: 16px"
+              class="btn btn-primary"
+              @click="AddReportItems(props.row.id)"
+            >
+           تعديل بيانات التقارير
+             </button>
              <button
               style="margin-right: 16px"
               class="btn btn-primary"
@@ -313,6 +320,12 @@
           //hash
         })
       },
+      AddReportItems(id){
+        this.$router.push({
+          name:'add-company-report-details',
+          params:{id:id},
+        })
+      }
     },
     computed: {
       direction() {
@@ -330,10 +343,13 @@
   }
   </script>
   
-  <style lang="scss">
+  <style lang="scss" >
   @import "@core/scss/vue/libs/vue-good-table.scss";
-  .vgt-left-align{
-      max-width: 25%;
+  
+  </style>
+  <style scoped>
+    .vgt-left-align{
+      max-width: 200px;
   }
   </style>
   

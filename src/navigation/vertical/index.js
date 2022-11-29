@@ -29,4 +29,9 @@ export default [
     route: 'safe',
     icon: 'DatabaseIcon',
   },
+  {
+    title: 'التقرير المجمع',
+    route: 'full-report',
+    icon: 'FileIcon',
+  },
 ]

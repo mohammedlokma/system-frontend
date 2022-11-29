@@ -54,6 +54,34 @@ const router = new VueRouter({
         ],
       },
     },
+    {
+      path: '/full-report',
+      name: 'full-report',
+      component: () => import('@/views/Admins/full-report.vue'),
+      meta: {
+        pageTitle: 'المشرفين',
+        breadcrumb: [
+          {
+            text: 'التقارير المجمعه',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/add-report-item',
+      name: 'add-report-item',
+      component: () => import('@/views/Admins/add-report-item.vue'),
+      meta: {
+        pageTitle: 'التقارير المجمعه',
+        breadcrumb: [
+          {
+            text: 'إضافة خانه للتقرير',
+            active: true,
+          },
+        ],
+      },
+    },
     //agents
     {
       path: '/agents/:id?',
@@ -206,6 +234,21 @@ const router = new VueRouter({
         ],
       },
     },
+    {
+      path: '/add-company-report-details/:id?',
+      name: 'add-company-report-details',
+      props:true,
+      component: () => import('@/views/Company/add-company-report-details.vue'),
+      meta: {
+        pageTitle: 'الشركات',
+        breadcrumb: [
+          {
+            text: 'تفاصيل عناصر الريبورت',
+            active: true,
+          },
+        ],
+      },
+    },
 
     //safe
     {
@@ -222,20 +265,7 @@ const router = new VueRouter({
         ],
       },
     },
-    {
-      path: '/safe',
-      name: 'safe',
-      component: () => import('@/views/Safe/safe.vue'),
-      meta: {
-        pageTitle: 'الخزنة',
-        breadcrumb: [
-          {
-            text: 'تفاصيل الخزنة',
-            active: true,
-          },
-        ],
-      },
-    },
+
     {
       path: '/add-income',
       name: 'add-income',

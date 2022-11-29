@@ -56,7 +56,14 @@ export default{
             price:20,
             details:"دفع فاتورة جمركية",
         }
-    ]
+    ],
+    companyReportItems:[
+        {
+        id:1,
+        companyId:1,
+        reportItems:[1,2,3,5]
+    }
+]
   
   
 }
