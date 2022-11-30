@@ -3,7 +3,8 @@
     title=""
     style="margin-top: 30px"
   >
-  
+  <b-row>
+    <b-col md="2">
     <button
       style="margin-top: -60px; float: right"
       class="btn btn-primary"
@@ -11,6 +12,17 @@
     >
       إضافة خانه
     </button>
+  </b-col>
+  <b-col md="2">
+    <button
+      style="margin-top: -60px;float: right"
+      class="btn btn-primary"
+      @click="AddRow"
+    >
+       إضافة داتا
+    </button>
+  </b-col>
+  </b-row>
     <!-- table -->
     <vue-good-table
       :columns="columns"
@@ -179,6 +191,8 @@ import {
   BFormSelect,
   BDropdown,
   BDropdownItem,
+  BRow,
+  BCol
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import store from '@/store/index'
@@ -200,6 +214,8 @@ export default {
     BFormSelect,
     BDropdown,
     BDropdownItem,
+    BRow,
+     BCol
   },
 
   directives: {
@@ -221,10 +237,16 @@ export default {
         }
         this.columns.push(obj)
     }
+    let commentObj =  {
+            label:'الملاحظات',
+            field:'comment', 
+        }
+
     let actionObj =  {
             label:'التفاصيل',
             field:'Action', 
         }
+        this.columns.push(commentObj)
         this.columns.push(actionObj)
     this.rows = this.$store.getters.GetReportData;
   },
@@ -244,6 +266,9 @@ export default {
   methods: {
    AddColumn(){
         this.$router.push('add-report-item')
+   },
+   AddRow(){
+    this.$router.push('add-row')
    },
    EditRow(){
 

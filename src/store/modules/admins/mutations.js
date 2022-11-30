@@ -27,7 +27,10 @@ export default{
       },
       AddColumn(state,payload){
         state.reportItems.push(payload)
-        state.fullReportData[0][payload.name] = '1250'
-        console.log(state.fullReportData[0])
+        state.fullReportData[0][payload.name] = ''
+      },
+      AddRow(state,payload){
+          state.fullReportData.push(payload)
+          console.log(state.fullReportData)
       }
 }

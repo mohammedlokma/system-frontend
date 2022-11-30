@@ -82,6 +82,20 @@ const router = new VueRouter({
         ],
       },
     },
+    {
+      path: '/add-row',
+      name: 'add-row',
+      component: () => import('@/views/Admins/add-row.vue'),
+      meta: {
+        pageTitle: 'التقارير المجمعه',
+        breadcrumb: [
+          {
+            text: 'إضافة داتا للتقرير',
+            active: true,
+          },
+        ],
+      },
+    },
     //agents
     {
       path: '/agents/:id?',

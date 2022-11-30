@@ -161,7 +161,6 @@ export default {
                     arabicName:this.name,
                     type:this.typeEN
                 }
-                console.log(payload)
             this.$store.commit('AddColumn',payload)
             this.$router.push('full-report')
         },
