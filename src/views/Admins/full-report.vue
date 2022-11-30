@@ -50,7 +50,7 @@
               toggle-class="text-decoration-none"
               no-caret
             >
-              <template v-slot:button-content style="max-width:100px">
+              <template v-slot:button-content >
                 <feather-icon
                   icon="MoreVerticalIcon"
                   size="16"
@@ -237,16 +237,21 @@ export default {
         }
         this.columns.push(obj)
     }
-    let commentObj =  {
-            label:'الملاحظات',
-            field:'comment', 
+    let agentCommentObj = {
+      label:'ملاحظات المندوب',
+      field:'agentComment',
+    } 
+    let companyCommentObj =  {
+            label:'ملاحظات الشركة',
+            field:'companyComment', 
         }
 
     let actionObj =  {
             label:'التفاصيل',
             field:'Action', 
         }
-        this.columns.push(commentObj)
+        this.columns.push(agentCommentObj)
+        this.columns.push(companyCommentObj)
         this.columns.push(actionObj)
     this.rows = this.$store.getters.GetReportData;
   },
@@ -297,6 +302,7 @@ export default {
 </style>
 <style scoped>
 .vgt-left-align,.sortable{
-    min-width:120px
+    max-width:120px
+    
 }
 </style>

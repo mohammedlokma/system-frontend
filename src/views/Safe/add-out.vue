@@ -3,14 +3,11 @@
     <b-card-code>
       <validation-observer ref="simpleRules">
         <b-form
-          style=""
           @submit.prevent
         >
-
           <b-row>
-
             <!--  price -->
-            <b-col cols="6">
+            <b-col cols="6" >
               <b-form-group
                 label="المبلغ"
                 label-for="v-price"
@@ -47,7 +44,7 @@
                         class="date"
                         v-model="date"
                         id="datepicker-buttons"
-                        placeholder="تاريخ الفاتورة"
+                        placeholder="تاريخ السحب"
                         :state="errors.length > 0 ? false:null"
                         today-button
                         reset-button
@@ -71,8 +68,48 @@
                   />
               </b-form-group>
             </b-col>
-        
-           
+          </b-row>
+            <b-row>
+          <b-col cols="3">
+              <b-form-group
+                label="خرج لمندوب"
+                label-for="v-agent"
+              >
+              
+           <b-form-checkbox
+            id="v-agent"
+           v-model="selected"
+          />
+              </b-form-group>
+          </b-col>
+           <b-col cols="3">
+              <b-form-group
+              v-if="this.selected"
+                label="اسم المندوب"
+                label-for="v-agent"
+              >
+               <validation-provider
+                  #default="{ errors }"
+                  name="اسم المندوب"
+                  rules="required"
+                >
+            <b-dropdown
+      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+      :text="agentName==null?'اسم المندوب' : agentName"
+      v-model='agentName'
+      :state="errors.length > 0 ? false:null"
+      variant="outline-primary"
+    >
+
+      <b-dropdown-item v-for="agent in agents" :key="agent.id" :value="agent.name" @click="agentName = agent.name">
+        {{agent.name}}
+      </b-dropdown-item>
+    </b-dropdown>
+           <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+          </b-col>
+          </b-row>
             <!-- submit and reset -->
             <b-col cols="12">
               <b-button
@@ -97,8 +134,7 @@
               </b-button>
             </b-col>
 
-          </b-row>
-
+        
         </b-form>
 
       </validation-observer>
@@ -113,7 +149,6 @@ import {
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import store from '@/store/index'
-import router from '@/router'
 import { ValidationProvider, ValidationObserver, localize } from 'vee-validate'
 import { required } from '@validations'
 
@@ -151,11 +186,15 @@ export default {
       price:null,
       date:null,
       details:'',
+      selected:null,
+      agentName:null,
+      agents:[]
     }
   },
   mounted() {
     // switch to arabic in validation
     localize(this.locale)
+    this.agents = this.$store.getters.GetAgents;
   },
   methods: {
 
@@ -172,6 +211,14 @@ export default {
     AddOut() {
     const payload = {id:new Date(),price:this.price,
     date:this.date,details:this.details}
+    if(this.selected){
+
+      let agent = this.agents.find(i=>i.name == this.agentName)
+        console.log("before"+agent.cost)
+
+        agent.cost += this.price
+        console.log("after"+ agent.cost)
+    }
        store.commit('AddOut',payload)
        this.$router.push({
         name:'safe',
@@ -185,3 +232,11 @@ export default {
   },
 }
 </script>
+<style scoped>
+
+.form-group{
+  font-size: 1.857rem;
+
+}
+
+</style>

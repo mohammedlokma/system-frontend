@@ -93,7 +93,6 @@
       <!-- statics -->
       <statistic-card-vertical
         style="
-          
           min-width: 150px;
           font-size: 20px;
           border-radius: 40%;
@@ -125,7 +124,7 @@ mounted(){
 data(){
   return{
     out:false,
-    total:null,
+    total:0,
   }
 },
 methods:{

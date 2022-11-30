@@ -78,7 +78,9 @@ export default{
             location:'مدينه نصر',
             certificateNumber:'12454',
             documentsDate:'23-11-2022',
-            comment:"gkjgk"
+            companyComment:"",
+            agentComment:""
+
         
         }
     ]
