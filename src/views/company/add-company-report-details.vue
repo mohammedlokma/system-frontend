@@ -9,9 +9,9 @@
     <b-list-group-item v-for="(item,index) in items" :key="item.id.toString()">
         {{item.arabicName}}
         <b-form-checkbox
-           :id="index"
+           :id="index.toString()"
            v-model="selected"
-           :value="item"
+           :value="item.id"
            style="float: left"
            
           />
@@ -29,7 +29,7 @@
                 type="submit"
                 variant="primary"
                 class="mr-1"
-                @click.prevent="UpdateItems()"
+                @click="UpdateItems()"
               >
                 إضافه
               </b-button>
@@ -67,18 +67,29 @@ export default {
   props:['id'],
   mounted(){
     this.items = this.$store.getters.GetReportItems
+    this.companyReportItems = this.$store.getters.GetCompanyReportItems(this.id)
+ if(this.companyReportItems.length !=0){
+  this.selected = this.companyReportItems[0].reportItems;
+ }
   },
   data(){
     return{
         items:[],
-        selected:[]
+        selected:[],
+        companyReportItems:null
     }
     },
     methods:{
         UpdateItems(){
-            
+            const payload = {
+              companyId : this.id,
+              reportItems:this.selected
+            }
+            this.$store.commit('EditCompanyReportItems',payload)
+            this.$router.push({name:'companies'})
         },
         back(){
+            this.$router.push({name:'companies'})
 
         }
     },

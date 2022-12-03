@@ -26,14 +26,14 @@
       class="btn btn-primary"
       @click="toggle(payment=true)"
     >
-       المدفوعات
+       المصاريف
     </button>
      <button
       style="margin-top: -10px; margin-right:5vh; "
       class="btn btn-primary"
       @click="toggle(payment=false)"
     >
-       الاستلامات
+       القسايم
     </button>
             </div>
        

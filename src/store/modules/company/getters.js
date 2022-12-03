@@ -15,6 +15,10 @@ export default{
       return state.bills.
       filter(i=>i.companyId ==id)
     },
+    GetCompanyReportItems:(state)=>(id)=>{
+      return state.companyReportItems
+      .filter(i=>i.companyId == id)
+    }
 
     
   }

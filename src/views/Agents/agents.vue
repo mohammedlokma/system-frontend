@@ -367,9 +367,9 @@ props:['id'],
 }
 </script>
 
-<style lang="scss">
-@import "@core/scss/vue/libs/vue-good-table.scss";
+<style lang="scss" >
+</style>
+<style scoped>
 .vgt-left-align{
     width: 25%;
-}
-</style>
+}</style>

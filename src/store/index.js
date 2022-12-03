@@ -9,6 +9,8 @@ import admins from './modules/admins'
 import agents from './modules/agents'
 import company from './modules/company'
 import safe from './modules/safe'
+import companyUser from './modules/company-user'
+import agentUser from './modules/agent-user'
 
 Vue.use(Vuex)
 
@@ -22,6 +24,8 @@ export default  new Vuex.Store({
     agents:agents,
     company:company,
     safe:safe,
+    companyUser:companyUser,
+    agentUser:agentUser,
   },
   strict: process.env.DEV,
 })

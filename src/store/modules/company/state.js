@@ -63,7 +63,7 @@ export default{
         companyId:1,
         reportItems:[1,2,3,5]
     }
-]
+],
   
   
 }

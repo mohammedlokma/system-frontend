@@ -8,11 +8,11 @@ export default{
     return state.servicePlaces;
   },
   GetClientPayments:(state)=> (id) =>{
-    return state.payments.
+    return state.expenses.
     filter(i=>i.agentId == id)
   },
   GetClientReceipts:(state)=> (id) =>{
-    return state.receipts
+    return state.coupons
       .filter(i=>i.agentId == id)
   },
 }

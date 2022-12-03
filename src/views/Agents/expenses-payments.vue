@@ -1,6 +1,6 @@
-  <template>
-  <div>
-  <div  style="display:flex">
+<template>
+<div>
+<div  style="display:flex">
     <b-form-datepicker
     class="date"
     v-model="from"
@@ -10,6 +10,7 @@
       reset-button
       close-button
       locale="en"
+      @click="console.log(this.from)"
     />
         <b-form-datepicker
    class="date"
@@ -34,11 +35,11 @@
       <div class="col-12 text-center">
         <p><strong>هل انت متأكد من حذف الجميع</strong>؟</p>
         <p
-          v-for="receipt in this.receipts"
-          :key="receipt.id.toString()"
+          v-for="payment in this.payments"
+          :key="payment.id.toString()"
           style="color: red"
         >
-          {{ receipt.id }}
+          {{ payment.id }}
         </p>
         <b-button
           variant="primary"
@@ -58,7 +59,7 @@
     <!-- table -->
     <vue-good-table
       :columns="columns"
-      :rows="this.filteredReceipts"
+      :rows="this.filteredPayments"
       :rtl="direction"
       :search-options="{
         enabled: true,
@@ -69,7 +70,7 @@
         perPage: pageLength,
       }"
     >
-     <template  slot="table-column" slot-scope="props">
+     <template  slot="table-column" slot-scope="props" >
      <span  v-if="props.column.label =='التفاصيل'">
       <span>التفاصيل</span>
       <button
@@ -102,11 +103,11 @@
       >
         <!-- Column: Price -->
         <span
-          v-if="props.column.field === 'companyId'"
+          v-if="props.column.field === 'price'"
           class="text-nowrap"
         >
         
-          <span class="text-nowrap">{{ props.row.companyId }}</span>
+          <span class="text-nowrap">{{ props.row.price }}</span>
         </span>
 
         <!-- Column: Action -->
@@ -206,9 +207,9 @@
         </div>
       </template>
     </vue-good-table>
-  </div>
-      </template>
-      
+    </div>
+    </template>
+        
 <script>
 import BCardCode from '@core/components/b-card-code/BCardCode.vue'
 import {
@@ -229,7 +230,6 @@ import { VueGoodTable } from 'vue-good-table'
 import store from '@/store/index'
 import Ripple from 'vue-ripple-directive'
 import { codeBasic } from '../code'
-
 export default {
   components: {
     BCardCode,
@@ -254,21 +254,21 @@ export default {
 props:['id'],
   mounted() {
     if(this.id){
-       this.receipts =  this.$store.getters.GetClientReceipts(this.id)
+       this.payments =  this.$store.getters.GetClientPayments(this.id)
 
     } 
   },
   
   data() {
     return {
-     receipts:[],
+     payments:[],
       pageLength: 7,
       dir: false,
       codeBasic,
       columns: [
         {
-          label: 'الشركة',
-          field: 'companyId',
+          label: 'السعر',
+          field: 'price',
           
         },
          {
@@ -289,11 +289,25 @@ props:['id'],
         from:new Date('2022-11-20').toISOString().split('T')[0],
         to:new Date('2022-11-22').toISOString().split('T')[0],
       searchTerm: '',
-
     }
   },
   methods: {
+    AddAgent() {
+     //
+    },
 
+
+    DeletePayment(id) {
+    //   this.agents = this.agents.filter(i=>i.id !== id);
+
+    //   store.commit('DeleteAgent', id)
+    },
+
+    DeleteAllPayments() {
+    //   this.agents = [];
+    //   store.commit('DeleteAgents')
+    },
+ 
   },
   computed: {
     direction() {
@@ -306,8 +320,8 @@ props:['id'],
       this.dir = false
       return this.dir
     },
-filteredReceipts(){
-  return (this.receipts.filter(i => {var time = (i.date)
+filteredPayments(){
+  return (this.payments.filter(i => {var time = (i.date)
                              return (this.from < time && time < this.to);
                             }))
 
@@ -317,8 +331,8 @@ filteredReceipts(){
 }
 </script>
 
-<style lang="scss">
-@import "@core/scss/vue/libs/vue-good-table.scss";
+<style lang="scss" scoped>
+
 .date{
     max-width: 400px;
     padding: 1;

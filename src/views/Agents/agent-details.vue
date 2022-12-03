@@ -9,7 +9,7 @@
   <payments :id="id" />
 </div>
 <div  v-else>
-<receipts :id="id" />
+<coupons :id="id" />
 </div>
     <template #code>
       {{ codeBasic }}
@@ -39,13 +39,13 @@ import Ripple from 'vue-ripple-directive'
 import { codeBasic } from '../code'
 import agentCard from './agent-card.vue'
 
-import payments from './payments.vue'
-import receipts from './receipts.vue'
+import payments from './expenses-payments.vue'
+import coupons from './coupons-payment.vue'
 
 export default {
   components: {
     'agent-card': agentCard,
-    'receipts': receipts,
+    'coupons': coupons,
     'payments': payments,
     BCardCode,
     VueGoodTable,

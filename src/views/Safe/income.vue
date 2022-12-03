@@ -310,8 +310,7 @@ filteredIncome(){
 }
 </script>
 
-<style lang="scss">
-@import "@core/scss/vue/libs/vue-good-table.scss";
+<style lang="scss" scoped>
 .date{
     max-width: 400px;
     padding: 1;

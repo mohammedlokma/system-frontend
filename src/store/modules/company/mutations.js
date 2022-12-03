@@ -59,4 +59,9 @@ export default{
     DeleteBills(state){
       state.bills.splice(0,state.bills.length);
     },
+    EditCompanyReportItems(state,payload){
+      let companyReport = state.companyReportItems
+      .find(i=>i.companyId == payload.companyId)
+      companyReport.reportItems = payload.reportItems
+    }
 }

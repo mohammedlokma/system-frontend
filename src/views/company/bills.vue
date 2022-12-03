@@ -341,8 +341,6 @@ filteredBills(){
 </script>
 
 <style lang="scss">
-@import "@core/scss/vue/libs/vue-good-table.scss";
-
 </style>
 <style scoped>
 .date{

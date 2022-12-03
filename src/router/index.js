@@ -308,6 +308,22 @@ const router = new VueRouter({
         ],
       },
     },
+
+    //agent-user
+    {
+      path: '/report',
+      name: 'report',
+      component: () => import('@/views/Agent-User/report.vue'),
+      meta: {
+        pageTitle: 'التقارير',
+        breadcrumb: [
+          {
+            text: 'مهماتي',
+            active: true,
+          },
+        ],
+      },
+    },
     {
       path: '/login',
       name: 'login',

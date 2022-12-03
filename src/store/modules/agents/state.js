@@ -40,7 +40,7 @@ export default{
             cost:0
         }
     ],
-    payments:[
+    expenses:[
         {
             id:1,
             agentId:1,
@@ -65,11 +65,13 @@ export default{
         },
 
     ],
-    receipts:[
+    coupons:[
         {
             id:1,
             agentId:1,
             companyId:1,
+            price:20,
+            billNumber:1234,
             details:"استلمت من شركة كذا",
             date:((new Date("2022-11-21")).toISOString().split('T')[0]),
         },
@@ -77,6 +79,8 @@ export default{
             id:2,
             agentId:1,
             companyId:1,
+            price:30,
+            billNumber:5665,
             details:"استلمت من شركة كذا",
             date:((new Date("2022-11-24")).toISOString().split('T')[0]),
         },

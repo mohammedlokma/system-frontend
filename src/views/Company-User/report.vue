@@ -3,26 +3,6 @@
     title=""
     style="margin-top: 30px"
   >
-  <b-row>
-    <b-col md="2">
-    <button
-      style="margin-top: -60px; float: right"
-      class="btn btn-primary"
-      @click="AddColumn"
-    >
-      إضافة خانه
-    </button>
-  </b-col>
-  <b-col md="2">
-    <button
-      style="margin-top: -60px;float: right"
-      class="btn btn-primary"
-      @click="AddRow"
-    >
-       إضافة داتا
-    </button>
-  </b-col>
-  </b-row>
     <!-- table -->
     <vue-good-table
       :columns="columns"
@@ -44,77 +24,17 @@
       >
 
         <span v-if="props.column.field === 'Action'">
-            <span>
-            <b-dropdown
-              variant="link"
-              toggle-class="text-decoration-none"
-              no-caret
-            >
-              <template v-slot:button-content >
-                <feather-icon
-                  icon="MoreVerticalIcon"
-                  size="16"
-                  class="text-body align-bottom mr-25"
-                />
-              </template>
-              <b-dropdown-item>
-                <button
-            style=""
+        <button
+            style="margin-right: 16px"
             class="btn btn-primary"
-            v-b-tooltip.hover.right="'تعديل'"
-            @click="EditRow(props.row)"
+            v-b-tooltip.hover.right="' تعديل الكومنت'"
+            @click="EditComment(props.row.id)"
           >
-            <feather-icon
+          <feather-icon
               icon="EditIcon"
               size="12"
             />
-          </button>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                     <button
-            v-ripple.400="'rgba(234, 84, 85, 0.15)'"
-            variant="outline-danger"
-            v-b-tooltip.hover.right="'حذف'"
-            class="btn btn-danger"
-            @click="$bvModal.show(props.row.id.toString())"
-          >
-            <feather-icon
-              icon="Trash2Icon"
-              size="12"
-            />
-          </button>
-              </b-dropdown-item>
-            </b-dropdown>
-          </span>
-          
-
-         
-          <b-modal
-            :id="props.row.id.toString()"
-            centered
-            header="test"
-            header-class="justify-content-center"
-            title="تأكيد الحذف"
-            hide-footer
-          >
-            <div class="col-12 text-center">
-              <p>
-                <strong >هل انت متأكد من الحذف ؟ </strong>
-              </p>
-              <b-button
-                variant="primary"
-                size="sm"
-                class="mt-2 mr-2"
-                @click="DeleteRow(props.row.id) + $bvModal.hide(props.row.id.toString())"
-              >تأكيد</b-button>
-              <b-button
-                variant="danger"
-                size="sm"
-                class="mt-2 ml-2"
-                @click="$bvModal.hide(props.row.id.toString())"
-              >إلغاء</b-button>
-            </div>
-          </b-modal>
+           </button>
         </span>
 
         <span v-else>
@@ -247,7 +167,7 @@ export default {
         }
 
     let actionObj =  {
-            label:'التفاصيل',
+            label:'تعديل البيانات',
             field:'Action', 
         }
         this.columns.push(agentCommentObj)
@@ -269,16 +189,9 @@ export default {
     }
   },
   methods: {
-   AddColumn(){
-        this.$router.push('add-report-item')
-   },
-   AddRow(){
-    this.$router.push('add-row')
-   },
-   EditRow(){
+  EditComment(){
 
-   },
-   DeleteRow(){}
+  }
   },
   computed: {
     direction() {
@@ -295,13 +208,8 @@ export default {
 
 }
 </script>
-
-<style lang="scss" >
-
-</style>
 <style scoped>
 .vgt-left-align,.sortable{
     max-width:120px
-    
 }
 </style>
