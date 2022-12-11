@@ -6,7 +6,7 @@
       <b-link class="brand-logo">
         <vuexy-logo />
         <h2 class="brand-text text-primary ml-1">
-          Vuexy
+          System
         </h2>
       </b-link>
       <!-- /Brand logo-->
@@ -40,11 +40,12 @@
           <b-card-title
             title-tag="h2"
             class="font-weight-bold mb-1"
+           
           >
-            Welcome to Vuexy! 👋
+           تسجيل الدخول 👋
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account and start the adventure
+           من فضلك ادخل اسم المستخدم وكلمة المرور
           </b-card-text>
 
           <!-- form -->
@@ -55,36 +56,34 @@
             >
               <!-- email -->
               <b-form-group
-                label="Email"
-                label-for="login-email"
+                label="اسم المستخدم"
+                label-for="login-text"
               >
                 <validation-provider
                   #default="{ errors }"
-                  name="Email"
-                  rules="required|email"
+                  name="اسم المستخدم"
+                  rules="required"
                 >
                   <b-form-input
-                    id="login-email"
-                    v-model="userEmail"
+                    id="login-text"
+                    v-model="userName"
                     :state="errors.length > 0 ? false:null"
-                    name="login-email"
-                    placeholder="john@example.com"
+                    name="login-text"
+                    placeholder="اسم المستخدم"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
               <!-- forgot password -->
-              <b-form-group>
-                <div class="d-flex justify-content-between">
-                  <label for="login-password">Password</label>
-                  <b-link :to="{name:'auth-forgot-password-v2'}">
-                    <small>Forgot Password?</small>
-                  </b-link>
-                </div>
+              <b-form-group 
+              label="كلمة المرور"
+                label-for="login-password"
+                >
+              
                 <validation-provider
                   #default="{ errors }"
-                  name="Password"
+                  name="كلمة المرور"
                   rules="required"
                 >
                   <b-input-group
@@ -112,89 +111,52 @@
                 </validation-provider>
               </b-form-group>
 
-              <!-- checkbox -->
-              <b-form-group>
-                <b-form-checkbox
-                  id="remember-me"
-                  v-model="status"
-                  name="checkbox-1"
-                >
-                  Remember Me
-                </b-form-checkbox>
-              </b-form-group>
+            
 
               <!-- submit buttons -->
               <b-button
                 type="submit"
                 variant="primary"
                 block
-                @click="validationForm"
+                @click="login"
               >
-                Sign in
+                تسجيل دخول
               </b-button>
             </b-form>
           </validation-observer>
-
-          <b-card-text class="text-center mt-2">
-            <span>New on our platform? </span>
-            <b-link :to="{name:'page-auth-register-v2'}">
-              <span>&nbsp;Create an account</span>
-            </b-link>
-          </b-card-text>
-
-          <!-- divider -->
-          <div class="divider my-2">
-            <div class="divider-text">
-              or
-            </div>
-          </div>
-
-          <!-- social buttons -->
-          <div class="auth-footer-btn d-flex justify-content-center">
-            <b-button
-              variant="facebook"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="FacebookIcon" />
-            </b-button>
-            <b-button
-              variant="twitter"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="TwitterIcon" />
-            </b-button>
-            <b-button
-              variant="google"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="MailIcon" />
-            </b-button>
-            <b-button
-              variant="github"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="GithubIcon" />
-            </b-button>
-          </div>
         </b-col>
       </b-col>
-    <!-- /Login-->
+    
     </b-row>
   </div>
 </template>
 
 <script>
 /* eslint-disable global-require */
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { ValidationProvider, ValidationObserver,localize } from 'vee-validate'
 import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
   BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BFormCheckbox, BCardText, BCardTitle, BImg, BForm, BButton,
 } from 'bootstrap-vue'
-import { required, email } from '@validations'
+// import { required, email } from '@validations'
+import {
+  required,
+  email,
+  confirmed,
+  url,
+  between,
+  alpha,
+  integer,
+  password,
+  min,
+  digits,
+  alphaDash,
+  length,
+} from "@validations";
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-
+import axios from '@axios'
 export default {
   components: {
     BRow,
@@ -217,15 +179,26 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
+      locale: 'ar',
       status: '',
       password: '',
-      userEmail: '',
+      userName: '',
       sideImg: require('@/assets/images/pages/login-v2.svg'),
       // validation rulesimport store from '@/store/index'
       required,
-      email,
+      error:null,
+      SearchResults:null,
+    
+       dir: false,
     }
   },
+  // beforeCreate() {
+  //     const { isRTL } = false;
+  //   document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr')
+  // },
+mounted(){
+    localize(this.locale);
+    },
   computed: {
     passwordToggleIcon() {
       return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
@@ -238,8 +211,63 @@ export default {
       }
       return this.sideImg
     },
+      statusVariant() {
+      const statusColor = {
+        /* eslint-disable key-spacing */
+        Current: "light-primary",
+        Professional: "light-success",
+        Rejected: "light-danger",
+        Resigned: "light-warning",
+        Applied: "light-info",
+        /* eslint-enable key-spacing */
+      };
+
+      return (status) => statusColor[status];
+    },
+    direction() {
+      if (store.state.appConfig.isRTL) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.dir = true;
+        return this.dir;
+      }
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.dir = false;
+      return this.dir;
+    },
   },
   methods: {
+    async login(){
+     const actionPayload = {
+      userName : this.userName,
+      password:this.password
+     }
+     try {
+       const response =  await this.$store.dispatch('Auth', actionPayload)
+        if(response.status = 200){
+        this.$toast({
+            component: ToastificationContent,
+            props: {
+              title:  "تم تسجيل الدخول بنجاح",
+              icon: 'EditIcon',
+              variant: 'success',
+            },
+          })
+          this.$router.push({name:'home'})
+     }
+      } 
+      catch (err) {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title:  err,
+              icon: 'TrashIcon',
+              variant: 'danger',
+            },
+          })
+      }
+    
+},
+
     validationForm() {
       this.$refs.loginValidation.validate().then(success => {
         if (success) {
@@ -249,6 +277,21 @@ export default {
               title: 'Form Submitted',
               icon: 'EditIcon',
               variant: 'success',
+            },
+          })
+
+          //localStorage.setItem('userData', JSON.stringify(userData))
+
+          this.$router.push({name:'home'})
+         
+        }
+        else{
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Access denied',
+              icon: 'TrashIcon',
+              variant: 'danger',
             },
           })
         }

@@ -11,7 +11,9 @@ import company from './modules/company'
 import safe from './modules/safe'
 import companyUser from './modules/company-user'
 import agentUser from './modules/agent-user'
-
+import auth from'./modules/Auth'
+import createMutationsSharer from "vuex-shared-mutations";
+import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex)
 
 export default  new Vuex.Store({
@@ -26,7 +28,11 @@ export default  new Vuex.Store({
     safe:safe,
     companyUser:companyUser,
     agentUser:agentUser,
+    auth:auth
   },
   strict: process.env.DEV,
+   plugins: [createMutationsSharer({ predicate: ["SetUserData","SetAutoLogout"] })
+  ,createPersistedState({paths: ["auth"]})]
+
 })
 

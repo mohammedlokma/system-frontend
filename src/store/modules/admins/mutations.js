@@ -21,6 +21,7 @@ export default{
       AddReportItem(state,payload){
         state.reportItems.push(payload)
       },
+      
       DeleteReportItem(state,id){
         state.reportItems = state.reportItems.filter(i => i.id !==  id);
 
@@ -32,5 +33,11 @@ export default{
       AddRow(state,payload){
           state.fullReportData.push(payload)
           console.log(state.fullReportData)
-      }
+      },
+      EditCompanyComment(state,payload){
+        console.log(payload)
+        let row = state.fullReportData.find(i=>i.id == payload.companyId)
+        console.log(row)
+        row.companyComment = payload.comment
+      },
 }

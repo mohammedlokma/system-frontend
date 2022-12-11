@@ -1,6 +1,9 @@
+  <!-- v-if="item.role === this.$store.getters.GetUserData.user_roles[1]" -->
+
+<!-- (dataParsed.user_roles).some(item => roles.includes(item)) -->
 <template>
   <li
-    v-if="canViewVerticalNavMenuLink(item)"
+   v-if=" this.$store.getters.GetUserData ?(item.roles).some(i=>( this.$store.getters.GetUserData.user_roles).includes(i)) : null "
     class="nav-item"
     :class="{
       'active': isActive,
@@ -44,6 +47,15 @@ export default {
       required: true,
     },
   },
+  mounted(){
+
+  },
+  data(){
+    return{
+      userRoles:null,
+    }
+  },
+
   setup(props) {
     const { isActive, linkProps, updateIsActive } = useVerticalNavMenuLink(props.item)
     const { t } = useI18nUtils()

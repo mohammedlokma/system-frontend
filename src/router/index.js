@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import { isUserLoggedIn, isAuth } from '@/auth/utils'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -22,6 +22,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin","company","agent"],
+        requiresAuth:true
       },
     },
     //admins
@@ -37,6 +39,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -52,6 +56,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -66,6 +72,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -80,6 +88,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -94,6 +104,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     //agents
@@ -110,6 +122,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -125,6 +139,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -140,6 +156,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -155,6 +173,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -170,6 +190,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -185,6 +207,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
 
@@ -201,6 +225,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -216,6 +242,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -231,6 +259,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -246,6 +276,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -261,6 +293,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
 
@@ -277,6 +311,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
 
@@ -292,6 +328,8 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
     {
@@ -306,13 +344,15 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["admin"],
+        requiresAuth:true
       },
     },
 
     //agent-user
     {
-      path: '/report',
-      name: 'report',
+      path: '/agent-report',
+      name: 'agent-report',
       component: () => import('@/views/Agent-User/report.vue'),
       meta: {
         pageTitle: 'التقارير',
@@ -322,6 +362,64 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        roles:["user"],
+        requiresAuth:true
+
+      },
+    },
+    {
+      path: '/edit-agent-comment',
+      name: 'edit-agent-comment',
+      props:true,
+      component: () => import('@/views/Agent-User/edit-agent-comment.vue'),
+      meta: {
+        pageTitle: 'التقارير',
+        breadcrumb: [
+          {
+            text: 'تعدبل كومنت على الشحنه',
+            active: true,
+          },
+        ],
+        roles:["agent"],
+        requiresAuth:true
+
+      },
+    },
+
+    //company-user
+    {
+      path: '/company-report',
+      name: 'company-report',
+      component: () => import('@/views/Company-User/report.vue'),
+      meta: {
+        pageTitle: 'التقارير',
+        breadcrumb: [
+          {
+            text: 'مهماتي',
+            active: true,
+          },
+        ],
+        roles:["company"],
+        requiresAuth:true
+
+      },
+    },
+    {
+      path: '/edit-company-comment',
+      name: 'edit-company-comment',
+      props:true,
+      component: () => import('@/views/Company-User/edit-company-comment.vue'),
+      meta: {
+        pageTitle: 'التقارير',
+        breadcrumb: [
+          {
+            text: 'تعدبل كومنت على الشحنه',
+            active: true,
+          },
+        ],
+        roles:["company"],
+        requiresAuth:true
+
       },
     },
     {
@@ -331,6 +429,17 @@ const router = new VueRouter({
       meta: {
         layout: 'full',
       },
+      roles:[]
+    },
+    {
+      path: '/not-authorized',
+      name: 'misc-not-authorized',
+      component: () => import('@/views/NotAuthorized.vue'),
+      meta:{
+        //layout: 'full',
+        roles:["no"]
+      }
+     
     },
     {
       path: '/error-404',
@@ -338,7 +447,10 @@ const router = new VueRouter({
       component: () => import('@/views/error/Error404.vue'),
       meta: {
         layout: 'full',
+      roles:["admin","company","agent"],
+      requiresAuth:true
       },
+
     },
     {
       path: '*',
@@ -346,7 +458,34 @@ const router = new VueRouter({
     },
   ],
 })
+router.beforeEach((to, _, next) => {
+  console.log(to.path)
 
+const isLoggedIn = isUserLoggedIn()
+let isAuthed
+const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+if(isLoggedIn){
+ isAuthed = isAuth(to.meta.roles)
+}
+
+if(!isLoggedIn && to.path !== '/login'  
+//  && !store.getters.isAuthenticated 
+//to.meta.role 
+  ){
+  return next({
+    name: 'login',
+  }).catch((err)=>{
+    console.log(err)
+  })
+}
+  else if(isLoggedIn &&  to.path !== '/login' && !isAuthed && requiresAuth){
+  return next({ name: 'misc-not-authorized' }) 
+  }
+else{
+  next()
+ }
+
+})
 // ? For splash screen
 // Remove afterEach hook if you are not using splash screen
 router.afterEach(() => {

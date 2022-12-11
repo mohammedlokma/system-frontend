@@ -22,7 +22,21 @@
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
-      <b-nav-item-dropdown
+       <!-- <div class="d-sm-flex d-none user-nav">
+            <p class="user-name font-weight-bolder mb-0">
+              {{name}}
+            </p>
+           
+          </div>
+          <b-avatar
+            size="40"
+            variant="light-primary"
+            badge
+            src=""
+            class="badge-minimal"
+            badge-variant="success"
+          /> -->
+          <b-nav-item-dropdown
         right
         toggle-class="d-flex align-items-center dropdown-user-link"
         class="dropdown-user"
@@ -30,9 +44,8 @@
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
-              John Doe
+              {{name}}
             </p>
-            <span class="user-status">Admin</span>
           </div>
           <b-avatar
             size="40"
@@ -44,53 +57,15 @@
           />
         </template>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="UserIcon"
-            class="mr-50"
-          />
-          <span>Profile</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="MailIcon"
-            class="mr-50"
-          />
-          <span>Inbox</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="CheckSquareIcon"
-            class="mr-50"
-          />
-          <span>Task</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="MessageSquareIcon"
-            class="mr-50"
-          />
-          <span>Chat</span>
-        </b-dropdown-item>
-
-        <b-dropdown-divider />
-
-        <b-dropdown-item link-class="d-flex align-items-center">
+        <b-dropdown-item link-class="d-flex align-items-center" @click="LogOut">
           <feather-icon
             size="16"
             icon="LogOutIcon"
             class="mr-50"
           />
-          <span>Logout</span>
+          <span>تسجيل الخروج</span>
         </b-dropdown-item>
-      </b-nav-item-dropdown>
+        </b-nav-item-dropdown>
     </b-navbar-nav>
   </div>
 </template>
@@ -100,7 +75,8 @@ import {
   BLink, BNavbarNav, BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
 } from 'bootstrap-vue'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
-
+import { initialAbility } from '@/libs/acl/config'
+//import useJwt from '@/auth/jwt/useJwt'
 export default {
   components: {
     BLink,
@@ -119,5 +95,21 @@ export default {
       default: () => {},
     },
   },
+  mounted(){
+    //this.name = JSON.parse(localStorage.getItem('userInfo')).user_display_name
+
+    this.name = this.$store.getters.GetUserData.user_name;
+  },
+  data(){
+    return{
+      name:''
+    }
+  },
+  methods:{
+    async LogOut(){
+      await this.$store.dispatch('logout')
+      this.$router.push({name:'login'})
+    }
+  }
 }
 </script>

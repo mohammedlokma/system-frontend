@@ -145,14 +145,19 @@ export default {
   },
 
   mounted() {
+
     this.reportItems = this.$store.getters.GetReportItems;
-    for(var i=0;i<this.reportItems.length;i++){
+   let company = this.$store.getters.GetCompanyReportItems(1)[0].reportItems
+  const filter = this.reportItems.filter((el)=>{ return company.some((f)=>{
+   return f == el.id
+  })})
+  for(var i=0;i<filter.length;i++){
         let obj = {
-            label:this.reportItems[i].arabicName,
-            field:this.reportItems[i].name,
+            label:filter[i].arabicName,
+            field:filter[i].name,
             filterOptions:{
                 enabled:true,
-                placeholder:'بحث ' + this.reportItems[i].arabicName
+                placeholder:'بحث ' + filter[i].arabicName
             }
         }
         this.columns.push(obj)
@@ -189,8 +194,12 @@ export default {
     }
   },
   methods: {
-  EditComment(){
-
+  EditComment(id){
+    console.log(id)
+    this.$router.push({
+      name:'edit-company-comment',
+      params:{id:id}
+    })
   }
   },
   computed: {

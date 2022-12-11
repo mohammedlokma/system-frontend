@@ -36,16 +36,57 @@ export default {
     LayoutFull,
 
   },
+  data(){
+    return {
+      userInfo:null
+    }
+  },
+  mounted(){
+     if (localStorage.userInfo) {
+      this.userInfo = localStorage.userInfo;
+    }
+    window.addEventListener("storage", this.onStorageUpdate);
+    
+
+  },
+  methods:{
+    onStorageUpdate(event) {
+      if (event.key === "userInfo") {
+        this.userInfo = event.newValue;
+      }
+    }
+  },
+  beforeDestroy() {
+    window.removeEventListener("storage", this.onStorageUpdate);
+  },
   // ! We can move this computed: layout & contentLayoutType once we get to use Vue 3
   // Currently, router.currentRoute is not reactive and doesn't trigger any change
+  created() {
+    this.$store.dispatch('tryLogin');
+  },
   computed: {
+     didAutoLogout() {
+      return this.$store.getters.didAutoLogout
+     },
     layout() {
       if (this.$route.meta.layout === 'full') return 'layout-full'
       return `layout-${this.contentLayoutType}`
     },
     contentLayoutType() {
-      return this.$store.state.appConfig.layout.type
+      if (!this.$route.meta.hideNavbar) {
+        return this.$store.state.appConfig.layout.type
+      }
     },
+  },
+  watch:{
+     didAutoLogout(curValue, oldValue) {
+      if (curValue && curValue !== oldValue) {
+          this.$router.push({name:'login'}).catch(()=>{});
+      }
+    },
+     userInfo(newInfo) {
+      localStorage.userInfo = newInfo;
+    }
   },
   beforeCreate() {
     // Set colors in theme
