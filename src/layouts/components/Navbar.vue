@@ -108,7 +108,9 @@ export default {
   methods:{
     async LogOut(){
       await this.$store.dispatch('logout')
-      this.$router.push({name:'login'})
+      localStorage.setItem('autoLogout',true)
+      this.$store.commit('SetLogoutOverTabs');
+
     }
   }
 }

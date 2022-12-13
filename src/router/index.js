@@ -93,8 +93,9 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/add-row',
+      path: '/add-row/:id?',
       name: 'add-row',
+      props:true,
       component: () => import('@/views/Admins/add-row.vue'),
       meta: {
         pageTitle: 'التقارير المجمعه',
@@ -362,7 +363,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
-        roles:["user"],
+        roles:["agent"],
         requiresAuth:true
 
       },
@@ -377,6 +378,84 @@ const router = new VueRouter({
         breadcrumb: [
           {
             text: 'تعدبل كومنت على الشحنه',
+            active: true,
+          },
+        ],
+        roles:["agent"],
+        requiresAuth:true
+
+      },
+    },
+    {
+      path: '/edit-agent-comment',
+      name: 'edit-agent-comment',
+      props:true,
+      component: () => import('@/views/Agent-User/edit-agent-comment.vue'),
+      meta: {
+        pageTitle: 'التقارير',
+        breadcrumb: [
+          {
+            text: 'تعدبل كومنت على الشحنه',
+            active: true,
+          },
+        ],
+        roles:["agent"],
+        requiresAuth:true
+
+      },
+    },
+    {
+      path: '/coupons',
+      name: 'coupons',
+      component: () => import('@/views/Agent-User/coupons.vue'),
+      meta: {
+        pageTitle: 'القسايم',
+        
+        roles:["agent"],
+        requiresAuth:true
+
+      },
+    },
+    {
+      path: '/add-coupon',
+      name: 'add-coupon',
+      props:true,
+      component: () => import('@/views/Agent-User/add-coupon.vue'),
+      meta: {
+        pageTitle: 'القسايم',
+        breadcrumb: [
+          {
+            text: 'إضافة قسيمة',
+            active: true,
+          },
+        ],
+        roles:["agent"],
+        requiresAuth:true
+
+      },
+    },
+    {
+      path: '/expenses',
+      name: 'expenses',
+      component: () => import('@/views/Agent-User/expenses.vue'),
+      meta: {
+        pageTitle: 'المصاريف',
+        
+        roles:["agent"],
+        requiresAuth:true
+
+      },
+    },
+    {
+      path: '/add-expense/:id?',
+      name: 'add-expense',
+      props:true,
+      component: () => import('@/views/Agent-User/add-expense.vue'),
+      meta: {
+        pageTitle: 'المصاريف',
+        breadcrumb: [
+          {
+            text: 'إضافة مصروف',
             active: true,
           },
         ],

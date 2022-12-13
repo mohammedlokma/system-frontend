@@ -62,7 +62,7 @@
             style=""
             class="btn btn-primary"
             v-b-tooltip.hover.right="'تعديل'"
-            @click="EditRow(props.row)"
+            @click="EditRow(props.row.id)"
           >
             <feather-icon
               icon="EditIcon"
@@ -275,7 +275,13 @@ export default {
    AddRow(){
     this.$router.push('add-row')
    },
-   EditRow(){
+   EditRow(id){
+      this.$router.push({
+        name:'add-row',
+        params:{id:id}
+      })
+   },
+   EditAgentComment(id){
 
    },
    DeleteRow(){}

@@ -3,6 +3,7 @@
     <b-card-code>
       <validation-observer ref="simpleRules">
         <b-form
+        v-if="!editExpense"
           style=""
           @submit.prevent
         >
@@ -99,6 +100,104 @@
           </b-row>
 
         </b-form>
+         <b-form
+        v-else
+          style=""
+          @submit.prevent
+        >
+
+          <b-row>
+
+            <!--  price -->
+            <b-col cols="6">
+              <b-form-group
+                label="المبلغ"
+                label-for="v-price"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="المبلغ"
+                  rules="required"
+                >
+
+                  <b-form-input
+                    id="v-price"
+                    v-model.number="expense.price"
+                    type="number"
+                    :state="errors.length > 0 ? false:null"
+                    placeholder=" المبلغ بالجنيه"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+
+    <b-col cols="6">
+              <b-form-group
+                label="التاريخ"
+                label-for="v-date"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="التاريخ"
+                  rules="required"
+                >
+                   <b-form-datepicker
+                        class="date"
+                        v-model="expense.date"
+                        id="datepicker-buttons"
+                        placeholder="التاريخ "
+                        :state="errors.length > 0 ? false:null"
+                        today-button
+                        reset-button
+                        close-button
+                        locale="en"
+                        />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+   
+            <b-col cols="6">
+              <b-form-group
+                label="التفاصيل"
+                label-for="v-details"
+              >
+                  <b-form-input
+                    id="v-details"
+                    v-model="expense.details"
+                    placeholder="التفاصيل"
+                  />
+              </b-form-group>
+            </b-col>
+           
+            <!-- submit and reset -->
+            <b-col cols="12">
+              <b-button
+                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+
+                type="submit"
+                variant="primary"
+                class="mr-1"
+                @click.prevent="validationForm"
+              >
+                تعديل
+              </b-button>
+            
+              <b-button
+                v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+                type="back"
+                variant="primary"
+                style="margin-right:15px;"
+                @click="this.back"
+              >
+                رجوع
+              </b-button>
+            </b-col>
+
+          </b-row>
+
+        </b-form>
 
       </validation-observer>
     </b-card-code>
@@ -139,7 +238,7 @@ export default {
   directives: {
     Ripple,
   },
-  props:['id'],
+  props:['id','expense'],
   data() {
     return {
 
@@ -150,11 +249,15 @@ export default {
       price:null,
       date:null,
       details:'',
-      type:null
-
+      editExpense:false
     }
   },
   mounted() {
+    console.log(this.id)
+    console.log(this.expense)
+    if(this.expense){
+      this.editExpense = true
+    }
     // switch to arabic in validation
     localize(this.locale)
   },
@@ -163,20 +266,40 @@ export default {
     validationForm() {
       
         this.$refs.simpleRules.validate().then(success => {
-          if (success) {
+          if (success && !this.editExpense) {
             // eslint-disable-next-line
             this.AddExpense();
+          }
+          else if(success && this.editExpense){
+            this.EditExpense()
           }
         })
     },
 
     AddExpense() {
-   
+      const payload= {
+        id:new Date().toISOString().split('T')[0],
+        clientId:1,
+        price:this.price,
+        date:this.date,
+        details:this.details
+      }
+      this.$store.commit('AddExpense',payload)
+      this.$router.push({name:'expenses'})
+    },
+    EditExpense(){
+      const payload= {
+        id:this.expense.id,
+        price:this.expense.price,
+        date:this.expense.date,
+        details:this.expense.details
+      }
+      this.$store.commit('EditExpense',payload)
+      this.$router.push({name:'expenses'})
     },
     back() {
       this.$router.push({
         name:'expenses',
-        params:{id:this.id}
       })
     },
   },

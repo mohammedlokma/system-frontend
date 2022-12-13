@@ -79,7 +79,7 @@ export default{
             certificateNumber:'12454',
             documentsDate:'23-11-2022',
             companyComment:"",
-            agentComment:""
+            agentComment:"تم تخريج الشحنه"
 
         
         }

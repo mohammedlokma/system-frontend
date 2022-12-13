@@ -7,5 +7,8 @@ export default{
       },
       didAutoLogout(state) {
         return state.didAutoLogout;
+      },
+      didLogout(state) {
+        return state.logoutOverTabs;
       }
 }

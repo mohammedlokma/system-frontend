@@ -34,10 +34,26 @@ export default{
           state.fullReportData.push(payload)
           console.log(state.fullReportData)
       },
+      EditRow(state,payload){
+        let row = state.fullReportData.find(i=>i.id == payload.id)
+        row.companyName= payload.companyName,
+        row.numberOfPackages = payload.numberOfPackages
+        row.weight= payload.weight,
+        row.supplierName= payload.supplierName,
+        row.agentName= payload.agentName,
+        row.location= payload.location,
+        row.certificateNumber= payload.certificateNumber,
+        row.documentsDate= payload.documentsDate,
+        row.agentComment= payload.agentComment
+
+
+    },
       EditCompanyComment(state,payload){
-        console.log(payload)
-        let row = state.fullReportData.find(i=>i.id == payload.companyId)
-        console.log(row)
+        let row = state.fullReportData.find(i=>i.id == payload.id)
         row.companyComment = payload.comment
       },
+      EditAgentComment(state,payload){
+        let row = state.fullReportData.find(i=>i.id == payload.id)
+        row.agentComment = payload.comment
+      }
 }

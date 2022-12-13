@@ -50,7 +50,19 @@ export default [
   },
   {
     title: 'التقرير',
-    route: 'user-report',
+    route: 'agent-report',
+    icon: 'FileIcon',
+    roles:["agent"]
+  },
+  {
+    title: 'القسايم',
+    route: 'coupons',
+    icon: 'FileIcon',
+    roles:["agent"]
+  },
+  {
+    title: 'المصاريف',
+    route: 'expenses',
     icon: 'FileIcon',
     roles:["agent"]
   },

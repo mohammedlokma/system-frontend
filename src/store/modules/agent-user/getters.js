@@ -3,8 +3,12 @@ export default{
     GetExpenses(state){
       return state.expenses
     },
-    GetCoupons(state){
-      return state.coupons
-    }
+    GetAgentCoupons:(state)=>(id)=>{
+      return state.coupons.filter(i=>i.clientId == id)
+    },
+    GetAgentExpenses:(state)=>(id)=>{
+      return state.expenses.filter(i=>i.clientId == id)
+    },
+    
     
   }

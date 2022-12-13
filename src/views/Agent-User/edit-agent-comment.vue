@@ -107,33 +107,23 @@ export default {
     }
   },
   mounted() {
-    console.log(this.id)
     // switch to arabic in validation
     localize(this.locale)
   },
   methods: {
 
-    validationForm() {
-      
-        this.$refs.simpleRules.validate().then(success => {
-          if (success) {
-            // eslint-disable-next-line
-            this.AddCoupon();
-          }
-        })
-    },
-
     AddComment() {
         const payload = {
-            companyId:this.id,
+            id:this.id,
             comment:this.comment
         }
-        console.log(this.id)
-        this.$store.commit('EditCompanyComment',payload)
+        this.$store.commit('EditAgentComment',payload)
+        this.$router.push({name:'agent-report'})
+
     },
     back() {
       this.$router.push({
-        name:'company-report',
+        name:'agent-report',
       })
     },
   },

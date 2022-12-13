@@ -113,20 +113,9 @@ export default {
     localize(this.locale)
   },
   methods: {
-
-    validationForm() {
-      
-        this.$refs.simpleRules.validate().then(success => {
-          if (success) {
-            // eslint-disable-next-line
-            this.AddCoupon();
-          }
-        })
-    },
-
     AddComment() {
         const payload = {
-            companyId:this.id,
+            id:this.id,
             comment:this.comment
         }
         this.$store.commit('EditCompanyComment',payload)

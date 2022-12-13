@@ -9,4 +9,8 @@
   GetReportData(state){
     return state.fullReportData;
   },
+  GetRowReportData:(state)=>(id)=>{
+    return state.fullReportData.find(i=>i.id == id)
+  },
+  
 }

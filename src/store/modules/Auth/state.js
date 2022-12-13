@@ -1,4 +1,5 @@
 export default{
     userData:null,
-    didAutoLogout: false
+    didAutoLogout: false,
+    logoutOverTabs:false
 }

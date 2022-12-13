@@ -189,8 +189,11 @@ export default {
     }
   },
   methods: {
-  EditComment(){
-
+  EditComment(id){
+    this.$router.push({
+      name:'edit-agent-comment',
+      params:{id:id}
+    })
   }
   },
   computed: {

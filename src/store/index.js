@@ -31,7 +31,7 @@ export default  new Vuex.Store({
     auth:auth
   },
   strict: process.env.DEV,
-   plugins: [createMutationsSharer({ predicate: ["SetUserData","SetAutoLogout"] })
+   plugins: [createMutationsSharer({ predicate: ["SetUserData","SetAutoLogout","SetLogoutOverTabs"] })
   ,createPersistedState({paths: ["auth"]})]
 
 })

@@ -62,11 +62,16 @@ export default {
   // ! We can move this computed: layout & contentLayoutType once we get to use Vue 3
   // Currently, router.currentRoute is not reactive and doesn't trigger any change
   created() {
+    console.log("hhh")
     this.$store.dispatch('tryLogin');
   },
   computed: {
      didAutoLogout() {
       return this.$store.getters.didAutoLogout
+     },
+     didLogout(){
+      return this.$store.getters.didLogout
+      
      },
     layout() {
       if (this.$route.meta.layout === 'full') return 'layout-full'
@@ -84,9 +89,15 @@ export default {
           this.$router.push({name:'login'}).catch(()=>{});
       }
     },
-     userInfo(newInfo) {
-      localStorage.userInfo = newInfo;
-    }
+    didLogout(curValue, oldValue) {
+
+      if (curValue && curValue !== oldValue) {
+
+          this.$router.push({name:'login'}).catch(()=>{});
+      }
+    },
+     
+    
   },
   beforeCreate() {
     // Set colors in theme
