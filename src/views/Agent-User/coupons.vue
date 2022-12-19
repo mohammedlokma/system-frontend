@@ -26,9 +26,7 @@
         perPage: pageLength,
       }"
     >
-     
-
-      <template
+          <template
         slot="table-row"
         slot-scope="props"
       >
@@ -177,7 +175,19 @@ export default {
       },
       {
         label:'رقم القسيمة',
+        field:'couponNumber'
+      },
+      {
+        label:'رقم الفاتورة',
         field:'billNumber'
+      },
+      {
+        label:'رقم البوليصه',
+        field:'policyNumber'
+      },
+      {
+        label:'رقم الشهادة',
+        field:'certificateNumber'
       },
         {
           label: 'الشركة',

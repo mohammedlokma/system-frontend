@@ -25,6 +25,7 @@
                 />
               </b-breadcrumb-item>
               <b-breadcrumb-item
+                 style="font-size:1.5rem"
                 v-for="item in $route.meta.breadcrumb"
                 :key="item.text"
                 :active="item.active"

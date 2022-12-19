@@ -84,7 +84,47 @@
                 </validation-provider>
               </b-form-group>
             </b-col>
+  <b-col cols="6">
+              <b-form-group
+                label="رقم الفاتورة"
+                label-for="v-coupon"
+              >
+                  <b-form-input
+                    id="v-bill"
+                    v-model="billNumber"
+                    placeholder="رقم الفاتورة"
+                  />
+                 
+              </b-form-group>
+            </b-col>
+            <b-col cols="6">
+              <b-form-group
+                label="رقم البوليصه"
+                label-for="v-policy"
+              >
 
+                  <b-form-input
+                    id="v-ploicy"
+                    v-model="policyNumber"
+                    placeholder="رقم البوليصه"
+                  />
+                
+              </b-form-group>
+            </b-col>
+              <b-col cols="6">
+              <b-form-group
+                label="رقم الشهاده"
+                label-for="v-certificate"
+              >
+
+                  <b-form-input
+                    id="v-certificate"
+                    v-model="certificateNumber"
+                    placeholder="رقم الشهاده"
+                  />
+                 
+              </b-form-group>
+            </b-col>
     <b-col cols="6">
               <b-form-group
                 label="التاريخ"
@@ -116,11 +156,20 @@
                 label="التفاصيل"
                 label-for="v-details"
               >
-                  <b-form-input
-                    id="v-details"
-                    v-model="details"
-                    placeholder="التفاصيل"
-                  />
+                  
+                  <b-dropdown
+      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+      :text="detail ==null ? 'نوع البيان': detail"
+      v-model='detail'
+      variant="outline-primary"
+    >
+      <b-dropdown-item 
+      v-for="company in companies" 
+      :key="company.id"
+      :value="company.name" @click="detail=company.name">
+      {{company.name}}
+      </b-dropdown-item>
+    </b-dropdown>
               </b-form-group>
             </b-col>
            
@@ -225,12 +274,50 @@
 
                   <b-form-input
                     id="v-coupon"
-                    v-model="coupon.billNumber"
-                    :state="errors.length > 0 ? false:null"
+                    v-model="coupon.couponNumber"
                     placeholder="رقم القسيمة"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
+              </b-form-group>
+            </b-col>
+            <!-- policy number -->
+                 <b-col cols="6">
+              <b-form-group
+                label="رقم البوليصه"
+                label-for="v-policy"
+              >
+                  <b-form-input
+                    id="v-policy"
+                    v-model="coupon.policyNumber"
+                    placeholder="رقم البوليصه"
+                  />
+              </b-form-group>
+            </b-col>
+            <!-- bill number -->
+                 <b-col cols="6">
+              <b-form-group
+                label="رقم الفاتورة"
+                label-for="v-bill"
+              >
+                  <b-form-input
+                    id="v-coupon"
+                    v-model="coupon.billNumber"
+                    placeholder="رقم الفاتورة"
+                  />
+              </b-form-group>
+            </b-col>
+            <!-- certificate number -->
+                 <b-col cols="6">
+              <b-form-group
+                label="رقم الشهاده"
+                label-for="v-certificate"
+              >
+                  <b-form-input
+                    id="v-certificate"
+                    v-model="coupon.certificateNumber"
+                    placeholder="رقم القسيمة"
+                  />
               </b-form-group>
             </b-col>
 
@@ -265,11 +352,19 @@
                 label="التفاصيل"
                 label-for="v-details"
               >
-                  <b-form-input
-                    id="v-details"
-                    v-model="coupon.details"
-                    placeholder="التفاصيل"
-                  />
+                  <b-dropdown
+      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+      :text="coupon.companyName"
+      v-model='coupon.companyName'
+      variant="outline-primary"
+    >
+      <b-dropdown-item 
+      v-for="company in companies" 
+      :key="company.id"
+      :value="company.name" @click="coupon.companyName=company.name">
+      {{company.name}}
+      </b-dropdown-item>
+    </b-dropdown>
               </b-form-group>
             </b-col>
            
@@ -349,9 +444,13 @@ export default {
       required,
       price:null,
       couponNumber:null,
+      billNumber:null,
+      certificateNumber:null,
+      policyNumber:null,
       date:null,
       details:null,
       companyName:null,
+      detail:null,
       editCoupon:false,
 
     }
@@ -396,6 +495,9 @@ export default {
         companyName:this.coupon.companyName,
         price:this.coupon.price,
         billNumber:this.coupon.billNumber,
+        policyNumber:this.coupon.policyNumber,
+        couponNumber:this.coupon.couponNumber,
+        certificateNumber:this.coupon.certificateNumber,
         date:this.coupon.date,
         details:this.coupon.details
       }

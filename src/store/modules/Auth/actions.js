@@ -44,7 +44,6 @@ export default{
         timer = setTimeout(function() {
           context.dispatch('autoLogout');
         }, expiresIn);
-        console.log(timer)
         // if (userData) {
         //   context.commit('SetUserData', userData);
         // }

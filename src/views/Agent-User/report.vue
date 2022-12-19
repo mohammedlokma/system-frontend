@@ -173,7 +173,9 @@ export default {
         this.columns.push(agentCommentObj)
         this.columns.push(companyCommentObj)
         this.columns.push(actionObj)
-    this.rows = this.$store.getters.GetReportData;
+    this.rows = this.$store.getters.GetReportData
+    .filter(i=>i.releaseStatus == false );
+    //  i.agentName=== localStorage.getItem('userInfo').user_display_name
   },
   
   data() {

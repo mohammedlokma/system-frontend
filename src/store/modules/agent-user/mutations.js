@@ -11,6 +11,9 @@ export default{
     coupon.price = payload.price
     coupon.companyName = payload.companyName
     coupon.billNumber = payload.billNumber
+    coupon.policyNumber = payload.policyNumber
+    coupon.certificateNumber = payload.certificateNumber
+    coupon.couponNumber = payload.couponNumber
     coupon.date = payload.date
     coupon.details = payload.details
   },

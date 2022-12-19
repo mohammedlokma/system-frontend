@@ -74,12 +74,31 @@ export default{
             numberOfPackages:'7',
             weight:'454',
             supplierName:'شركة 1',
-            agentName:'أحمد محمد',
+            agentName:'حسن',
             location:'مدينه نصر',
             certificateNumber:'12454',
             documentsDate:'23-11-2022',
             companyComment:"",
-            agentComment:"تم تخريج الشحنه"
+            agentComment:"تم تخريج الشحنه",
+            releaseStatus:false,
+            releaseDate:''
+
+        
+        },
+        {
+            id:1,
+            companyName:'شركة مصر',
+            numberOfPackages:'8',
+            weight:'123',
+            supplierName:'شركة 21',
+            agentName:'أحمد حسن',
+            location:'مدينه نصر',
+            certificateNumber:'12454',
+            documentsDate:'23-11-2022',
+            companyComment:"",
+            agentComment:"تم تخريج الشحنه",
+            releaseStatus:true,
+            releaseDate:''
 
         
         }

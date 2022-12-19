@@ -21,20 +21,53 @@
     >
       إضافة عهده
     </button>
+    <button
+      style="margin-top: -80px;margin-right:3vh; "
+      class="btn btn-primary"
+       @click="$bvModal.show('modal-danger')"
+    >
+     سحب العهده
+    </button>
+
      <button
-      style="margin-top: -10px; margin-right:20vh; "
+      style="margin-top: -10px; margin-right:5vh; "
       class="btn btn-primary"
       @click="toggle(payment=true)"
     >
        المصاريف
     </button>
      <button
-      style="margin-top: -10px; margin-right:5vh; "
+      style="margin-top: -10px; margin-right:3vh; "
       class="btn btn-primary"
       @click="toggle(payment=false)"
     >
        القسايم
     </button>
+     <b-modal
+      id="modal-danger"
+      centered
+      header="test"
+      header-class="justify-content-center"
+      title="تأكيد السحب"
+      hide-footer
+    >
+      <div class="col-12 text-center">
+        <p><strong>هل انت متأكد من سحب العهده من {{agent.name}}</strong>؟</p>
+     
+        <b-button
+          variant="danger"
+          size="sm"
+          class="mt-2 mr-2"
+          @click="ResetCost(agent.id) + $bvModal.hide('modal-danger')"
+        >تأكيد</b-button>
+        <b-button
+          variant="primary"
+          size="sm"
+          class="mt-2 ml-2"
+          @click="$bvModal.hide('modal-danger')"
+        >إلغاء</b-button>
+      </div>
+    </b-modal>
             </div>
        
           </div>
@@ -173,6 +206,9 @@ methods:{
       name:"add-cost",
       params:{id:id}
     })
+  },
+  ResetCost(id){
+    this.$store.commit('ResetCost',id)
   },
   toggle(payment){
     this.$emit('toggle',payment)

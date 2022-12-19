@@ -42,8 +42,56 @@
         slot="table-row"
         slot-scope="props"
       >
-
-        <span v-if="props.column.field === 'Action'">
+<span v-if="props.column.field === 'Release'">
+          <button
+            style=""
+            class="btn btn-success"
+            v-b-tooltip.hover.right="'تم الإفراج عن الشحنه'"
+            @click="$bvModal.show('release'+props.row.id.toString())"
+          >
+            <feather-icon
+              icon="EditIcon"
+              size="12"
+            />
+          </button>
+      <b-modal
+      :id="'release'+props.row.id.toString()"
+      centered
+      header="test"
+      header-class="justify-content-center"
+      title="تأكيد الإفراج"
+      hide-footer
+    >
+      <div class="col-12 text-center">
+        <b-form-group
+            label="تاريخ الإفراج عن الشحنه"
+            label-for="v-releaseDate"
+            style="font-size:20px"
+          >
+            <b-form-input
+              id="v-releaseDate"
+              type="date"
+              v-model="releaseDate"
+              
+            />
+          </b-form-group>
+     
+        <b-button
+          variant="success"
+          size="sm"
+          class="mt-2 mr-2"
+          @click="ReleaseDone(props.row.id) + $bvModal.hide('release'+props.row.id.toString())"
+        >تأكيد</b-button>
+        <b-button
+          variant="primary"
+          size="sm"
+          class="mt-2 ml-2"
+          @click="$bvModal.hide('release'+props.row.id.toString())"
+        >إلغاء</b-button>
+      </div>
+    </b-modal>
+        </span>
+        <span v-else-if="props.column.field === 'Action'">
             <span>
             <b-dropdown
               variant="link"
@@ -250,10 +298,15 @@ export default {
             label:'التفاصيل',
             field:'Action', 
         }
+        let releaseObj =  {
+            label:'الإفراج',
+            field:'Release', 
+        }
         this.columns.push(agentCommentObj)
         this.columns.push(companyCommentObj)
+        this.columns.push(releaseObj)
         this.columns.push(actionObj)
-    this.rows = this.$store.getters.GetReportData;
+    this.rows = this.$store.getters.GetReportData.filter(i=>i.releaseStatus == false);
   },
   
   data() {
@@ -266,6 +319,7 @@ export default {
       columns: [],
       rows:[],
       searchTerm: '',
+      releaseDate:null
     }
   },
   methods: {
@@ -281,11 +335,19 @@ export default {
         params:{id:id}
       })
    },
-   EditAgentComment(id){
-
-   },
-   DeleteRow(){}
+   DeleteRow(){},
+   ReleaseDone(id){
+    let row = this.rows.find(i=>i.id == id)
+    row.releaseStatus = true
+    this.rows = this.rows.filter(i=>i.releaseStatus == false)
+    const payload = {
+      id:id,
+      releaseDate:this.releaseDate
+    }
+    this.$store.commit('ReleaseDone',payload)
   },
+  },
+  
   computed: {
     direction() {
       if (store.state.appConfig.isRTL) {

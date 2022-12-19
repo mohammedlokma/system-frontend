@@ -10,6 +10,7 @@
     return state.fullReportData;
   },
   GetRowReportData:(state)=>(id)=>{
+    console.log(state.fullReportData.find(i=>i.id == id))
     return state.fullReportData.find(i=>i.id == id)
   },
   

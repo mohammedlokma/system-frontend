@@ -38,5 +38,9 @@ export default{
         agent.cost += payload.cost
         console.log(typeof(agent.cost))
       },
+      ResetCost(state,payload){
+        let agent = state.agents.find(i=>i.id == payload)
+        agent.cost =0
+      }
 
 }

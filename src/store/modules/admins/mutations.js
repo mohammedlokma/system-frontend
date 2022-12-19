@@ -32,7 +32,6 @@ export default{
       },
       AddRow(state,payload){
           state.fullReportData.push(payload)
-          console.log(state.fullReportData)
       },
       EditRow(state,payload){
         let row = state.fullReportData.find(i=>i.id == payload.id)
@@ -55,5 +54,11 @@ export default{
       EditAgentComment(state,payload){
         let row = state.fullReportData.find(i=>i.id == payload.id)
         row.agentComment = payload.comment
+      },
+      ReleaseDone(state,payload){
+        let row = state.fullReportData.find(i=>i.id == payload.id)
+        row.releaseStatus = true
+        row.releaseDate = payload.releaseDate 
+        console.log(row)
       }
 }

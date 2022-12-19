@@ -3,6 +3,7 @@
     title=""
     style="margin-top: 30px"
   >
+ 
     <!-- table -->
     <vue-good-table
       :columns="columns"
@@ -24,17 +25,77 @@
       >
 
         <span v-if="props.column.field === 'Action'">
-        <button
-            style="margin-right: 16px"
+            <span>
+            <b-dropdown
+              variant="link"
+              toggle-class="text-decoration-none"
+              no-caret
+            >
+              <template v-slot:button-content >
+                <feather-icon
+                  icon="MoreVerticalIcon"
+                  size="16"
+                  class="text-body align-bottom mr-25"
+                />
+              </template>
+              <b-dropdown-item>
+                <button
+            style=""
             class="btn btn-primary"
-            v-b-tooltip.hover.right="' تعديل الكومنت'"
-            @click="EditComment(props.row.id)"
+            v-b-tooltip.hover.right="'تعديل'"
+            @click="EditRow(props.row.id)"
           >
-          <feather-icon
+            <feather-icon
               icon="EditIcon"
               size="12"
             />
-           </button>
+          </button>
+              </b-dropdown-item>
+              <b-dropdown-item>
+                     <button
+            v-ripple.400="'rgba(234, 84, 85, 0.15)'"
+            variant="outline-danger"
+            v-b-tooltip.hover.right="'حذف'"
+            class="btn btn-danger"
+            @click="$bvModal.show(props.row.id.toString())"
+          >
+            <feather-icon
+              icon="Trash2Icon"
+              size="12"
+            />
+          </button>
+              </b-dropdown-item>
+            </b-dropdown>
+          </span>
+          
+
+         
+          <b-modal
+            :id="props.row.id.toString()"
+            centered
+            header="test"
+            header-class="justify-content-center"
+            title="تأكيد الحذف"
+            hide-footer
+          >
+            <div class="col-12 text-center">
+              <p>
+                <strong >هل انت متأكد من الحذف ؟ </strong>
+              </p>
+              <b-button
+                variant="primary"
+                size="sm"
+                class="mt-2 mr-2"
+                @click="DeleteRow(props.row.id) + $bvModal.hide(props.row.id.toString())"
+              >تأكيد</b-button>
+              <b-button
+                variant="danger"
+                size="sm"
+                class="mt-2 ml-2"
+                @click="$bvModal.hide(props.row.id.toString())"
+              >إلغاء</b-button>
+            </div>
+          </b-modal>
         </span>
 
         <span v-else>
@@ -145,19 +206,14 @@ export default {
   },
 
   mounted() {
-
     this.reportItems = this.$store.getters.GetReportItems;
-   let company = this.$store.getters.GetCompanyReportItems(1)[0].reportItems
-  const filter = this.reportItems.filter((el)=>{ return company.some((f)=>{
-   return f == el.id
-  })})
-  for(var i=0;i<filter.length;i++){
+    for(var i=0;i<this.reportItems.length;i++){
         let obj = {
-            label:filter[i].arabicName,
-            field:filter[i].name,
+            label:this.reportItems[i].arabicName,
+            field:this.reportItems[i].name,
             filterOptions:{
                 enabled:true,
-                placeholder:'بحث ' + filter[i].arabicName
+                placeholder:'بحث ' + this.reportItems[i].arabicName
             }
         }
         this.columns.push(obj)
@@ -170,17 +226,19 @@ export default {
             label:'ملاحظات الشركة',
             field:'companyComment', 
         }
-
+let releaseDateObj =  {
+            label:'تاريخ الإفراج',
+            field:'releaseDate', 
+        }
     let actionObj =  {
-            label:'تعديل البيانات',
+            label:'التفاصيل',
             field:'Action', 
         }
         this.columns.push(agentCommentObj)
         this.columns.push(companyCommentObj)
+        this.columns.push(releaseDateObj)
         this.columns.push(actionObj)
-this.rows = this.$store.getters.GetReportData
-    .filter(i=>i.releaseStatus == false );
-    //  i.companyName=== localStorage.getItem('userInfo').user_display_name
+    this.rows = this.$store.getters.GetReportData.filter(i=>i.releaseStatus == true);
   },
   
   data() {
@@ -193,17 +251,15 @@ this.rows = this.$store.getters.GetReportData
       columns: [],
       rows:[],
       searchTerm: '',
+      releaseDate:null
     }
   },
   methods: {
-  EditComment(id){
-    console.log(id)
-    this.$router.push({
-      name:'edit-company-comment',
-      params:{id:id}
-    })
-  }
+  
+   DeleteRow(){},
+   
   },
+  
   computed: {
     direction() {
       if (store.state.appConfig.isRTL) {
@@ -219,8 +275,13 @@ this.rows = this.$store.getters.GetReportData
 
 }
 </script>
+
+<style lang="scss" >
+
+</style>
 <style scoped>
 .vgt-left-align,.sortable{
     max-width:120px
+    
 }
 </style>

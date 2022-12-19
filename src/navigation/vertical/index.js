@@ -43,6 +43,12 @@ export default [
     roles:["admin"]
   },
   {
+    title: 'الشحنات المفرج عنها',
+    route: 'released-shipments',
+    icon: 'FileIcon',
+    roles:["admin"]
+  },
+  {
     title: 'التقرير ',
     route: 'company-report',
     icon: 'FileIcon',

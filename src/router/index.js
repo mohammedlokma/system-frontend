@@ -77,6 +77,22 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/released-shipments',
+      name: 'released-shipments',
+      component: () => import('@/views/Admins/released-shipments.vue'),
+      meta: {
+        pageTitle: 'المشرفين',
+        breadcrumb: [
+          {
+            text: 'الشحنات المفرج عنها',
+            active: true,
+          },
+        ],
+        roles:["admin"],
+        requiresAuth:true
+      },
+    },
+    {
       path: '/add-report-item',
       name: 'add-report-item',
       component: () => import('@/views/Admins/add-report-item.vue'),
@@ -377,7 +393,7 @@ const router = new VueRouter({
         pageTitle: 'التقارير',
         breadcrumb: [
           {
-            text: 'تعدبل كومنت على الشحنه',
+            text: 'تعديل كومنت على الشحنه',
             active: true,
           },
         ],
@@ -417,7 +433,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/add-coupon',
+      path: '/add-coupon/:id?',
       name: 'add-coupon',
       props:true,
       component: () => import('@/views/Agent-User/add-coupon.vue'),

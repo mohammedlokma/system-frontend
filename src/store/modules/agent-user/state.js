@@ -30,6 +30,9 @@ coupons:[
         companyName:"فايزر",
         price:200,
         billNumber:"11548",
+        couponNumber:"1223",
+        policyNumber:"123",
+        certificateNumber:"1323",
         date:new Date().toISOString().split('T')[0] ,
         details:"قسيمة 1"
     },
@@ -39,6 +42,9 @@ coupons:[
         companyName:"مصر للتأمين",
         price:150,
         billNumber:"264656",
+        couponNumber:"1223",
+        policyNumber:"123",
+        certificateNumber:"1323",
         date:new Date().toISOString().split('T')[0] ,
         details:"قسيمة 2"
     },
@@ -48,6 +54,9 @@ coupons:[
         companyName:"فايزر",
         price:450,
         billNumber:"64244",
+        couponNumber:"1223",
+        policyNumber:"123",
+        certificateNumber:"1323",
         date:new Date().toISOString().split('T')[0] ,
         details:"قسيمة 1"
     }
